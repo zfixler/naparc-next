@@ -1,8 +1,6 @@
-import naparc from '../../data/database.json';
+import { search } from '../../helpers/search';
 
-export default function handler(req, res) {
-    const names = naparc.map(cong => {
-        return cong.name
-    })
-	res.status(200).send(names);
+export default async function handler(req, res) {
+	const results = await search(req.body.location);
+	res.status(200).send(JSON.stringify(await results, null, 4));
 }
