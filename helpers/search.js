@@ -20,21 +20,26 @@ const getPosition = async (i) => {
 	}
 };
 
-export const search = async (location, dis = 50) => {
-	const searchArea = await getPosition(location).catch((error) =>
+export const search = async (body) => {
+
+	const searchArea = await getPosition(body.searchInput).catch((error) =>
 		console.log(error)
 	);
-    console.log(searchArea)
+
     if(typeof searchArea !== 'string'){
-        const filteredArr = naparc.filter((cong) => cong !== null);
-        const congArr = filteredArr.map((cong) => {
-            const d = distance(cong.lat, cong.long, searchArea.lat, searchArea.long, dis);
+        const congArr = naparc.map((cong) => {
+            const d = distance(cong.lat, cong.long, searchArea.lat, searchArea.long);
             cong.d = Math.round(d);
             return cong;
         });
-        
-        const closestResults = congArr.filter((cong) => cong.d < dis);
-        const sorted = closestResults.sort((a, b) => a.d - b.d);
+        const filteredResults = congArr.filter(c => {
+			let den = c.denom.toLowerCase();
+			if(body[den] !== undefined && c.d < body.dis){
+				return c
+			} 
+		})
+
+        const sorted = filteredResults.sort((a, b) => a.d - b.d);
         return sorted;
     } else {
         return searchArea

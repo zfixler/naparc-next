@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
         --font-family: 'Poppins', sans-serif;
     }
 
-    html, body {
+    html, body, * {
         margin: 0;
         padding: 0;
         font-family: var(--font-family);
