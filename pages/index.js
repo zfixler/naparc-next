@@ -30,16 +30,19 @@ export default function Home() {
 				<h1 className="headline">Find a Reformed congregation near you.</h1>
 				<Search props={{ results, setResults }} />
 			</header>
+			{results !== null && results.meta.pageCount > 1 && (
+				<Pagination props={{ pageNum, setCurrentPage, currentPage }} />
+			)}
 			{results !== null && (
 				<motion.div className="resultsWrapper" variants={stagger} initial="hidden" animate="show">
-						{results.results[currentPage].map((r) => (
+						{results.results[0] ? results.results[currentPage].map((r) => (
 							<motion.div variants={stagger}>
 								<ResultCard key={r.id} result={r} />
 							</motion.div>
-						))}
+						)) : 'Whoops! It looks like that search did not find any congregations. Please adjust your settings and try again.'}
 				</motion.div>
 			)}
-			{results !== null && (
+			{results !== null && results.meta.pageCount > 1 && (
 				<Pagination props={{ pageNum, setCurrentPage, currentPage }} />
 			)}
 		</div>

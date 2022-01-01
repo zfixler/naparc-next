@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
 
         /* Colors */
 
-        --gray: #eff4fb;
+        --alice: #eff4fb;
         --white: #fff;
         --blue: #060EC8;
 
@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        background-color: var(--gray);
+        background-color: var(--alice);
     }
 
     main {

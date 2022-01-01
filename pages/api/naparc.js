@@ -21,6 +21,6 @@ export default async function handler(req, res) {
 
 		results: paginatedArr
 	}
-	console.log(JSON.stringify(data, null, 4))
+	
 	res.status(200).json(JSON.stringify(data, null, 4));
 }

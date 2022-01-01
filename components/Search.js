@@ -6,13 +6,16 @@ import {
 	SearchBar,
 	InputWrapper,
 	Button,
-	SettingsPanel
+	SettingsPanel,
+	DenominationSettings,
 } from './styled/Search.styled';
-import { SettingsIcon, SearchIcon } from '../assets/icons';
+import Checkbox from './Checkbox';
+import Loading from './Loading';
+import { SettingsIcon, SearchIcon, CloseIcon } from '../assets/icons';
 
 function Search({ props }) {
 	const router = useRouter();
-	const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const { setResults } = props;
 	const [searchInput, setSearchInput] = useState('');
 	const [denominations, setDenominations] = useState({
@@ -25,9 +28,14 @@ function Search({ props }) {
 		rpcna: true,
 		frcna: true,
 	});
+	const [selectNone, setSelectNone] = useState(false);
 	const [dis, setDis] = useState(25);
+	const [loading, setLoading] = useState(false)
+
+	const selectText = selectNone ? 'Select All' : 'Select None';
 
 	async function handleSubmit() {
+		setLoading(true)
 		const res = await fetch('api/naparc', {
 			method: 'POST',
 			headers: {
@@ -37,6 +45,7 @@ function Search({ props }) {
 		});
 
 		setResults(await res.json());
+		setLoading(false)
 		setDenominations({
 			pca: router.query.pca === 'on' ? true : false,
 			opc: router.query.opc === 'on' ? true : false,
@@ -66,6 +75,32 @@ function Search({ props }) {
 		}
 	}, [router.query]);
 
+	useEffect(() => {
+		if (selectNone) {
+			setDenominations({
+				pca: false,
+				opc: false,
+				arp: false,
+				urcna: false,
+				hrc: false,
+				prc: false,
+				rpcna: false,
+				frcna: false,
+			});
+		} else {
+			setDenominations({
+				pca: true,
+				opc: true,
+				arp: true,
+				urcna: true,
+				hrc: true,
+				prc: true,
+				rpcna: true,
+				frcna: true,
+			});
+		}
+	}, [selectNone]);
+
 	return (
 		<SearchContainer>
 			<Form>
@@ -79,79 +114,88 @@ function Search({ props }) {
 							value={searchInput}
 							onChange={(e) => setSearchInput(e.target.value)}
 						/>
-						<SettingsIcon height="20" width="20" color="inherit" onClick={() => setIsSettingsOpen(!isSettingsOpen)}/>
+						<SettingsIcon
+							height="20"
+							width="20"
+							color="inherit"
+							className="settingsIcon"
+							onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+						/>
 					</InputWrapper>
 					<Button>Search</Button>
 				</SearchBar>
 				<SettingsPanel open={isSettingsOpen}>
-					<input
-						type="checkbox"
-						name="pca"
-						checked={denominations.pca}
-						onChange={(e) => selectChange(e)}
+					<CloseIcon
+						height="15"
+						width="15"
+						color="var(--blue)"
+						className="closeIcon"
+						onClick={() => setIsSettingsOpen(!isSettingsOpen)}
 					/>
-					<label htmlFor="pca">PCA</label>
-					<input
-						type="checkbox"
-						name="opc"
-						checked={denominations.opc}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="opc">OPC</label>
-					<input
-						type="checkbox"
-						name="arp"
-						checked={denominations.arp}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="arp">ARP</label>
-					<input
-						type="checkbox"
-						name="rpcna"
-						checked={denominations.rpcna}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="rpcna">RPCNA</label>
-					<input
-						type="checkbox"
-						name="urcna"
-						checked={denominations.urcna}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="urcna">URCNA</label>
-					<input
-						type="checkbox"
-						name="prc"
-						checked={denominations.prc}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="prc">PRC</label>
-					<input
-						type="checkbox"
-						name="hrc"
-						checked={denominations.hrc}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="hrc">HRC</label>
-					<input
-						type="checkbox"
-						name="frcna"
-						checked={denominations.frcna}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="frcna">FRCNA</label>
-					<select
-						name="dis"
-						value={dis}
-						onChange={(e) => setDis(e.target.value)}>
-						<option value="10">10 miles</option>
-						<option value="25">25 miles</option>
-						<option value="50">50 miles</option>
-						<option value="75">75 miles</option>
-						<option value="100">100 miles</option>
-					</select>
+					<div
+						className="backgroundDiv"
+						onClick={(e) => {
+							e.preventDefault();
+							if (e.target === e.currentTarget) {
+								setIsSettingsOpen(false);
+							}
+						}}></div>
+					<DenominationSettings>
+						<subtitle className="settingsTitle">Denominations</subtitle>
+						<Checkbox
+							name={'opc'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<Checkbox
+							name={'pca'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<Checkbox
+							name={'rpcna'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<Checkbox
+							name={'arp'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<Checkbox
+							name={'urcna'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<Checkbox
+							name={'hrc'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<Checkbox
+							name={'prc'}
+							select={selectChange}
+							denominations={denominations}
+						/>
+						<p onClick={() => setSelectNone(!selectNone)}>{selectText}</p>
+					</DenominationSettings>
+
+					<label htmlFor="dis" className="settingsTitle">
+						Search Radius <br />
+						<select
+							name="dis"
+							value={dis}
+							onChange={(e) => setDis(e.target.value)}>
+							<option value="10">10 miles</option>
+							<option value="25">25 miles</option>
+							<option value="50">50 miles</option>
+							<option value="75">75 miles</option>
+							<option value="100">100 miles</option>
+						</select>
+					</label>
 				</SettingsPanel>
 			</Form>
+			{loading && <Loading />}
 		</SearchContainer>
 	);
 }

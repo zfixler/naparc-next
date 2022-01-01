@@ -1,12 +1,13 @@
 import React from 'react';
 
-function search({width, height, color}) {
+function search({width, height, color, className}) {
 	return (
 		<svg
 			version="1.1"
 			xmlns="http://www.w3.org/2000/svg"
 			width={width}
 			height={height}
+			className={className}
 			style={{backgroundColor: 'var(--white)'}}
 			viewBox="0 0 32 32">
 			<title>search</title>
