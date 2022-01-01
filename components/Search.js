@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { SearchContainer } from './styled/Search.styled';
+import {
+	SearchContainer,
+	Form,
+	SearchBar,
+	InputWrapper,
+	Button,
+	SettingsPanel
+} from './styled/Search.styled';
+import { SettingsIcon, SearchIcon } from '../assets/icons';
 
 function Search({ props }) {
 	const router = useRouter();
-
-	const { results, setResults } = props;
+	const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+	const { setResults } = props;
 	const [searchInput, setSearchInput] = useState('');
 	const [denominations, setDenominations] = useState({
 		pca: true,
@@ -39,7 +47,7 @@ function Search({ props }) {
 			rpcna: router.query.rpcna === 'on' ? true : false,
 			frcna: router.query.frcna === 'on' ? true : false,
 		});
-		setDis(router.query.dis)
+		setDis(router.query.dis);
 	}
 
 	function selectChange(e) {
@@ -55,31 +63,27 @@ function Search({ props }) {
 	useEffect(() => {
 		if (router.query.searchInput) {
 			handleSubmit();
-			console.log('submitted');
 		}
 	}, [router.query]);
 
 	return (
 		<SearchContainer>
-			<form>
-				<input
-					type="search"
-					name="searchInput"
-					placeholder="Enter search location"
-					value={searchInput}
-					onChange={(e) => setSearchInput(e.target.value)}
-				/>
-				<button>Search</button>
-				<aside>
-					{/* <input
-						type="checkbox"
-						name="selectAll"
-						checked={denominations.selectAll}
-						onChange={(e) => selectChange(e)}
-					/>
-					<label htmlFor="select">
-						{denominations.select ? 'All' : 'None'}
-					</label> */}
+			<Form>
+				<SearchBar>
+					<InputWrapper>
+						<SearchIcon height="20" width="20" color="inherit" />
+						<input
+							type="search"
+							name="searchInput"
+							placeholder="Enter search location"
+							value={searchInput}
+							onChange={(e) => setSearchInput(e.target.value)}
+						/>
+						<SettingsIcon height="20" width="20" color="inherit" onClick={() => setIsSettingsOpen(!isSettingsOpen)}/>
+					</InputWrapper>
+					<Button>Search</Button>
+				</SearchBar>
+				<SettingsPanel open={isSettingsOpen}>
 					<input
 						type="checkbox"
 						name="pca"
@@ -146,8 +150,8 @@ function Search({ props }) {
 						<option value="75">75 miles</option>
 						<option value="100">100 miles</option>
 					</select>
-				</aside>
-			</form>
+				</SettingsPanel>
+			</Form>
 		</SearchContainer>
 	);
 }
