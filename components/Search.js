@@ -40,6 +40,7 @@ function Search({ props }) {
 		}
 
 		setLoading(true);
+		setCurrentPage(0);
 
 		let body = null;
 
@@ -73,7 +74,8 @@ function Search({ props }) {
 			body: body
 		});
 
-		setResults(await res.json());
+		const data = await res.json()
+		setResults(data);
 
 		let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage + 1}`;
 
@@ -119,7 +121,7 @@ function Search({ props }) {
 	useEffect(() => {
 		if (router.query.pg) {
 			if(router.query.pg !== currentPage){
-				let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage}`;
+				let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage + 1}`;
 				router.push(url, undefined, { shallow: true });
 			}
 		}

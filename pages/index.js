@@ -1,11 +1,23 @@
 import Head from 'next/head';
 import { Search, ResultCard, Pagination } from '../components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 
 export default function Home() {
 	const [results, setResults] = useState(null);
 	const [currentPage, setCurrentPage] = useState(0);
+	const router = useRouter();
+
+	useEffect(() => {
+		if(router.query.pg && results !== null){
+			if(results.meta.pageCount > 1){
+				setCurrentPage(parseInt(router.query.pg - 1))
+			} else {
+				setCurrentPage(0)
+			}
+		}
+	}, [router.query.pg])
 
 	const pageNum = results !== null ? results.meta.pageCount : 0;
 
