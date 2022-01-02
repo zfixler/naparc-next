@@ -16,7 +16,7 @@ import { SettingsIcon, SearchIcon, CloseIcon } from '../assets/icons';
 function Search({ props }) {
 	const router = useRouter();
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-	const { setResults } = props;
+	const { setResults, currentPage, setCurrentPage } = props;
 	const [searchInput, setSearchInput] = useState('');
 	const [denominations, setDenominations] = useState({
 		pca: true,
@@ -30,33 +30,55 @@ function Search({ props }) {
 	});
 	const [selectNone, setSelectNone] = useState(false);
 	const [dis, setDis] = useState(25);
-	const [loading, setLoading] = useState(false)
+	const [loading, setLoading] = useState(false);
 
 	const selectText = selectNone ? 'Select All' : 'Select None';
 
-	async function handleSubmit() {
-		setLoading(true)
+	async function handleSubmit(e, urlParams) {
+		if(e){
+			e.preventDefault();
+		}
+
+		setLoading(true);
+
+		let body = null;
+
+		if(urlParams){
+			body = JSON.stringify({body: urlParams});
+			console.log(body)
+		} else {
+			body = JSON.stringify({
+				body: {
+					searchInput: searchInput,
+					pca: denominations.pca,
+					opc: denominations.opc,
+					rpcna: denominations.rpcna,
+					urcna: denominations.urcna,
+					prc: denominations.prc,
+					hrc: denominations.hrc,
+					frcna: denominations.frcna,
+					arp: denominations.arp,
+					dis: dis,
+				},
+			})
+
+			console.log(body)
+		}
+
 		const res = await fetch('api/naparc', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ body: router.query }),
+			body: body
 		});
 
 		setResults(await res.json());
-		setLoading(false)
-		setDenominations({
-			pca: router.query.pca === 'on' ? true : false,
-			opc: router.query.opc === 'on' ? true : false,
-			arp: router.query.arp === 'on' ? true : false,
-			urcna: router.query.arp === 'on' ? true : false,
-			hrc: router.query.hrc === 'on' ? true : false,
-			prc: router.query.prc === 'on' ? true : false,
-			rpcna: router.query.rpcna === 'on' ? true : false,
-			frcna: router.query.frcna === 'on' ? true : false,
-		});
-		setDis(router.query.dis);
+
+		let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage + 1}`;
+
+		router.push(url, undefined, { shallow: true });
+		setLoading(false);
 	}
 
 	function selectChange(e) {
@@ -70,10 +92,38 @@ function Search({ props }) {
 	}
 
 	useEffect(() => {
-		if (router.query.searchInput) {
-			handleSubmit();
+		if(router.asPath !== '/'){
+			const url = new URL(window.location.href);
+			if(url.searchParams.get("searchInput") !== ""){
+				const urlParams = {
+					searchInput: url.searchParams.get("searchInput"),
+					pca: url.searchParams.get("pca"),
+					opc: url.searchParams.get("opc"),
+					rpcna: url.searchParams.get("rpcna"),
+					urcna: url.searchParams.get("urcna"),
+					prc: url.searchParams.get("prc"),
+					hrc: url.searchParams.get("hrc"),
+					frcna: url.searchParams.get("frcna"),
+					arp: url.searchParams.get("arp"),
+					dis: url.searchParams.get("dis"),
+				}
+				handleSubmit(null, urlParams)
+			} else {
+				router.push('/')
+			}
 		}
-	}, [router.query]);
+	}, [])
+
+	//TODO: Fix issue with url change not being reflected in application state.
+
+	useEffect(() => {
+		if (router.query.pg) {
+			if(router.query.pg !== currentPage){
+				let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage}`;
+				router.push(url, undefined, { shallow: true });
+			}
+		}
+	}, [currentPage]);
 
 	useEffect(() => {
 		if (selectNone) {
@@ -103,7 +153,7 @@ function Search({ props }) {
 
 	return (
 		<SearchContainer>
-			<Form>
+			<Form onSubmit={(e) => handleSubmit(e)}>
 				<SearchBar>
 					<InputWrapper>
 						<SearchIcon height="20" width="20" color="inherit" />

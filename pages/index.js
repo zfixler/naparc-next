@@ -28,7 +28,7 @@ export default function Home() {
 			</Head>
 			<header>
 				<h1 className="headline">Find a Reformed congregation near you.</h1>
-				<Search props={{ results, setResults }} />
+				<Search props={{ currentPage, setResults, setCurrentPage }} />
 			</header>
 			{results !== null && results.meta.pageCount > 1 && (
 				<Pagination props={{ pageNum, setCurrentPage, currentPage }} />
