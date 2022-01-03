@@ -38,12 +38,12 @@ function ResultCard({ result }) {
 						</>
 					)}
 					<p>
-						<span>Address: </span>
-						{address}
-					</p>
-					<p>
 						<span>{isPhone && 'Phone: '}</span>
 						{isPhone && phone}
+					</p>
+					<p>
+						<span>Address: </span>
+						{address}
 					</p>
 				</InfoWrapper>
 				<footer>

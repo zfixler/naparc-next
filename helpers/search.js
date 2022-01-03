@@ -34,7 +34,7 @@ export const search = async (body) => {
         });
         const filteredResults = congArr.filter(c => {
 			let den = c.denom.toLowerCase();
-			if(body[den] !== undefined && c.d < body.dis){
+			if(body[den] !== false && c.d < body.dis){
 				return c
 			} 
 		})

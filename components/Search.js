@@ -16,7 +16,7 @@ import { SettingsIcon, SearchIcon, CloseIcon } from '../assets/icons';
 function Search({ props }) {
 	const router = useRouter();
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-	const { setResults, currentPage, setCurrentPage } = props;
+	const { setResults, currentPage, setCurrentPage, setError } = props;
 	const [searchInput, setSearchInput] = useState('');
 	const [denominations, setDenominations] = useState({
 		pca: true,
@@ -46,7 +46,6 @@ function Search({ props }) {
 
 		if(urlParams){
 			body = JSON.stringify({body: urlParams});
-			console.log(body)
 		} else {
 			body = JSON.stringify({
 				body: {
@@ -63,7 +62,6 @@ function Search({ props }) {
 				},
 			})
 
-			console.log(body)
 		}
 
 		const res = await fetch('api/naparc', {
@@ -74,13 +72,29 @@ function Search({ props }) {
 			body: body
 		});
 
-		const data = await res.json()
-		setResults(data);
+		if (res.status === 200){
+			const data = await res.json()
 
-		let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage + 1}`;
+			if (data.meta.error === true){
+				setError(data.data.message)
+				setLoading(false)
+			} else {
+				setResults(data);
+				console.log(data)
+				let url = `?searchInput=${searchInput}&urcna=${denominations.urcna}&opc=${denominations.opc}&pca=${denominations.pca}&rpcna=${denominations.rpcna}&hrc=${denominations.hrc}&prc=${denominations.prc}&arp=${denominations.arp}&frcna=${denominations.frcna}&dis=${dis}&pg=${currentPage + 1}`;
+		
+				router.push(url, undefined, { shallow: true });
+				setLoading(false);
+			}
+		} else if (res.status === 500){
+			setError('Whoops! The server encountered an error. Please try your search again.');
+			setLoading(false);
+		} else {
+			const data = await res.json()
+			console.log(res.status, data)
+			setLoading(false);
+		}
 
-		router.push(url, undefined, { shallow: true });
-		setLoading(false);
 	}
 
 	function selectChange(e) {

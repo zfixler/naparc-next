@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 export default function Home() {
 	const [results, setResults] = useState(null);
 	const [currentPage, setCurrentPage] = useState(0);
+	const [error, setError] = useState(null);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -40,7 +41,8 @@ export default function Home() {
 			</Head>
 			<header>
 				<h1 className="headline">Find a Reformed congregation near you.</h1>
-				<Search props={{ currentPage, setResults, setCurrentPage }} />
+				{error && <p>{error}</p>}
+				<Search props={{ currentPage, setResults, setCurrentPage, setError }} />
 			</header>
 			{results !== null && results.meta.pageCount > 1 && (
 				<Pagination props={{ pageNum, setCurrentPage, currentPage }} />
@@ -48,8 +50,8 @@ export default function Home() {
 			{results !== null && (
 				<motion.div className="resultsWrapper" variants={stagger} initial="hidden" animate="show">
 						{results.results[0] ? results.results[currentPage].map((r) => (
-							<motion.div variants={stagger}>
-								<ResultCard key={r.id} result={r} />
+							<motion.div key={r.id} variants={stagger}>
+								<ResultCard result={r} />
 							</motion.div>
 						)) : 'Whoops! It looks like that search did not find any congregations. Please adjust your settings and try again.'}
 				</motion.div>

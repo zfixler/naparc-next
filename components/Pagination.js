@@ -12,9 +12,9 @@ function Pagination({ props }) {
 		<PageLinks>
 			{pages.map((p) => {
                 if(currentPage === p){
-                    return <PageButton current={true} onClick={() => setCurrentPage(p)}>{p + 1}</PageButton>;
+                    return <PageButton key={p} current={true} onClick={() => setCurrentPage(p)}>{p + 1}</PageButton>;
                 } else {
-                    return <PageButton onClick={() => setCurrentPage(p)}>{p + 1}</PageButton>;
+                    return <PageButton key={p} onClick={() => setCurrentPage(p)}>{p + 1}</PageButton>;
                 }
 			})}
 		</PageLinks>

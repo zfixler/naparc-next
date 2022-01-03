@@ -3,24 +3,37 @@ import { search } from '../../helpers/search';
 export default async function handler(req, res) {
 	const results = await search(req.body.body);
 
-	const totalCount = await results.length;
-	const perPage = 6;
-	const pageCount = Math.ceil(totalCount / perPage);
+	if (typeof results === 'string') {
+		const data = {
+			meta: {
+				error: true,
+			},
+			data: {
+				message: results
+			}
+		}
+		console.log(JSON.stringify(data))
+		res.status(200).json(data);
+	} else {
+		const totalCount = await results.length;
+		const perPage = 6;
+		const pageCount = Math.ceil(totalCount / perPage);
 
-	const paginatedArr = [];
+		const paginatedArr = [];
+		for (let i = 0; i < results.length; i += perPage) {
+			paginatedArr.push(results.slice(i, i + perPage));
+		}
 
-	for(let i = 0; i < results.length; i += perPage){
-		paginatedArr.push(results.slice(i, i + perPage))
-	};
+		const data = {
+			meta: {
+				totalCount: totalCount,
+				pageCount: pageCount,
+				error: false
+			},
 
-	const data = {
-		meta: {
-			totalCount: totalCount,
-			pageCount: pageCount,
-		},
+			results: paginatedArr,
+		};
 
-		results: paginatedArr
+		res.status(200).json(JSON.stringify(data, null, 4));
 	}
-	
-	res.status(200).json(JSON.stringify(data, null, 4));
 }
