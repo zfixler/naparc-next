@@ -8,10 +8,11 @@ import {
 	Button,
 	SettingsPanel,
 	DenominationSettings,
+	Suggestions
 } from './styled/Search.styled';
 import Checkbox from './Checkbox';
 import Loading from './Loading';
-import { SettingsIcon, SearchIcon, CloseIcon } from '../assets/icons';
+import { SettingsIcon, SearchIcon, CloseIcon, Pin } from '../assets/icons';
 
 function Search({ props }) {
 	const router = useRouter();
@@ -31,6 +32,7 @@ function Search({ props }) {
 	const [selectNone, setSelectNone] = useState(false);
 	const [dis, setDis] = useState(25);
 	const [loading, setLoading] = useState(false);
+	const [suggestions, setSuggestions] = useState({"results":[{"datasource":{"sourcename":"openstreetmap","attribution":"© OpenStreetMap contributors","license":"Open Database License","url":"https://www.openstreetmap.org/copyright"},"city":"Grove","county":"Delaware County","state":"Oklahoma","postcode":"07344","country":"United States","country_code":"us","village":"Grove","lon":-94.7691186,"lat":36.5936863,"state_code":"OK","formatted":"Grove, OK 07344, United States of America","address_line1":"Grove, OK 07344","address_line2":"United States of America","category":"administrative","result_type":"postcode","rank":{"importance":0.37707300990936143,"confidence":1,"confidence_city_level":1,"match_type":"full_match"},"place_id":"51b36f383d39b157c059a84aa5e9fd4b4240f00101f901b3d2020000000000c00207"},{"datasource":{"sourcename":"openstreetmap","attribution":"© OpenStreetMap contributors","license":"Open Database License","url":"https://www.openstreetmap.org/copyright"},"county":"Cane Grove","state":"Demerara-Mahaica","country":"Guyana","country_code":"gy","lon":-57.92932991389755,"lat":6.6368006,"state_code":"DE","name":"Cane Grove","formatted":"Cane Grove, Guyana","address_line1":"Cane Grove","address_line2":"Guyana","category":"administrative","result_type":"county","rank":{"importance":0.45,"confidence":1,"match_type":"full_match"},"place_id":"5136b15948f4f64cc059ef4adc74158c1a40f00101f901b75fab0000000000c0020992030a43616e652047726f7665"},{"datasource":{"sourcename":"openstreetmap","attribution":"© OpenStreetMap contributors","license":"Open Database License","url":"https://www.openstreetmap.org/copyright"},"county":"Haslington - Grove","state":"Demerara-Mahaica","country":"Guyana","country_code":"gy","lon":-57.96926081685096,"lat":6.703109100000001,"state_code":"DE","name":"Haslington - Grove","formatted":"Haslington - Grove, Guyana","address_line1":"Haslington - Grove","address_line2":"Guyana","category":"administrative","result_type":"county","rank":{"importance":0.45,"confidence":1,"match_type":"full_match"},"place_id":"51a6d50abd10fc4cc0597a14f8d4fbcf1a40f00101f901295fab0000000000c002099203124861736c696e67746f6e202d2047726f7665"},{"datasource":{"sourcename":"openstreetmap","attribution":"© OpenStreetMap contributors","license":"Open Database License","url":"https://www.openstreetmap.org/copyright"},"county":"North Grove","state":"Saskatchewan","country":"Canada","country_code":"ca","lon":-105.55758698881368,"lat":50.696875000000006,"state_code":"SK","name":"North Grove","formatted":"North Grove, SK, Canada","address_line1":"North Grove, SK","address_line2":"Canada","category":"administrative","result_type":"county","rank":{"importance":0.45,"confidence":1,"match_type":"full_match"},"place_id":"5150685681af635ac0593433333333594940f00101f9013eb7b50000000000c0020992030b4e6f7274682047726f7665"},{"datasource":{"sourcename":"openstreetmap","attribution":"© OpenStreetMap contributors","license":"Open Database License","url":"https://www.openstreetmap.org/copyright"},"city":"City of Spruce Grove","state":"Alberta","country":"Canada","country_code":"ca","lon":-113.903503,"lat":53.545204,"state_code":"AB","formatted":"City of Spruce Grove, AB, Canada","address_line1":"City of Spruce Grove, AB","address_line2":"Canada","category":"administrative","result_type":"city","rank":{"importance":0.46237775370916623,"confidence":1,"confidence_city_level":1,"match_type":"full_match"},"place_id":"51a0353ffed2795cc059fed2a23ec9c54a40f00101f901fe943f0000000000c00208"}]})
 
 	const selectText = selectNone ? 'Select All' : 'Select None';
 
@@ -172,7 +174,7 @@ function Search({ props }) {
 			<Form onSubmit={(e) => handleSubmit(e)}>
 				<SearchBar>
 					<InputWrapper>
-						<SearchIcon height="20" width="20" color="inherit" />
+						<SearchIcon height="30" width="30" color="inherit" />
 						<input
 							type="search"
 							name="searchInput"
@@ -181,8 +183,8 @@ function Search({ props }) {
 							onChange={(e) => setSearchInput(e.target.value)}
 						/>
 						<SettingsIcon
-							height="20"
-							width="20"
+							height="30"
+							width="30"
 							color="inherit"
 							className="settingsIcon"
 							onClick={() => setIsSettingsOpen(!isSettingsOpen)}
@@ -190,6 +192,7 @@ function Search({ props }) {
 					</InputWrapper>
 					<Button>Search</Button>
 				</SearchBar>
+						{suggestions && <Suggestions>{suggestions.results.map(s => <p><Pin height="40" width="40" color="var(--blue)" />{s.formatted}</p>)}</Suggestions>}
 				<SettingsPanel open={isSettingsOpen}>
 					<CloseIcon
 						height="15"

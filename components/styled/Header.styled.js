@@ -9,7 +9,13 @@ export const HeaderContainer = styled.header`
     
     nav {
         display: flex;
+        flex-direction: column;
+        align-items: flex-end;
         gap: 1em;
+
+        @media (min-width: 40em){
+            flex-direction: row;
+        }
     }
 
     a {

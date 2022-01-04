@@ -1,6 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+        html {
+          font-size: 100%;
+
+        @media (min-width: 40em){
+            font-size: 112.5%;
+        }
+    }
+
     :root {
         --font-family: 'Poppins', sans-serif;
 
@@ -10,23 +18,32 @@ const GlobalStyle = createGlobalStyle`
         --white: #fff;
         --blue: #060EC8;
 
+
+
         --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        /* Typography */
+
+        --fs-h1: 2.488rem;
+        --fs-h2: 2.074rem;
+        --fs-h3: 1.728rem;
+        --fs-h4: 1.44rem;
+        --fs-h5: 1.2rem;
+        --fs-small: 0.833rem;
+
     }
 
     html, body, * {
         margin: 0;
         padding: 0;
         font-family: var(--font-family);
+        
     }
 
-    body {
+
+    html, body {
         background-color: var(--alice);
-    }
-
-    main {
-        padding: 0 1em;
-        width: min(90%, 1200px);
-        margin: 0 auto;
+        height: 100%;
+        width: 100%;
     }
 
     header {

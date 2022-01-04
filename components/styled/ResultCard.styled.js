@@ -5,8 +5,8 @@ export const Card = styled.article`
 	padding: 1em;
 	border-radius: 8px;
 	box-shadow: var(--box-shadow);
-	width: 450px;
-	max-width: 90%;
+	width: min(450px, 85vw);
+	margin: 0 auto;
 	height: 95%;
 	display: flex;
 	flex-direction: column;
@@ -18,6 +18,10 @@ export const Card = styled.article`
 		color: var(--blue);
 		text-transform: uppercase;
 		text-align: center;
+	}
+
+	header {
+		gap: 0;
 	}
 
 	a {

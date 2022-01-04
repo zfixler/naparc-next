@@ -12,9 +12,8 @@ function Header() {
 				</a>
 			</Link>
 			<nav>
-				<Link href="/about">FAQ</Link>
+				<Link href="/faq">FAQ</Link>
 				<Link href="/contact">Contact</Link>
-				<Link href="/about">Resources</Link>
 			</nav>
 		</HeaderContainer>
 	);
