@@ -1,7 +1,10 @@
 import React from 'react'
+//Styled components
 import { FooterContainer } from './styled/Footer.styled';
 
+//Footer component
 function Footer() {
+    //Dynamic year
     const date = new Date()
     const year = date.getFullYear()
     return (

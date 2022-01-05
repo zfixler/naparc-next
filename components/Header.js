@@ -1,8 +1,12 @@
+//Library imports
 import React from 'react';
 import Link from 'next/link';
+//Styled components
 import { HeaderContainer } from './styled/Header.styled';
-import { NaparcLogo } from '../assets/icons';
+//Icons
+import { NaparcLogo } from './icons';
 
+//Universal header component, including navigation
 function Header() {
 	return (
 		<HeaderContainer>

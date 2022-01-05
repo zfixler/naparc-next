@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Component for denomination filter checkboxes
 function Checkbox({name, select, denominations}) {
 
     return (
