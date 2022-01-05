@@ -45,45 +45,55 @@ export const InputWrapper = styled.div`
 	}
 `;
 
-export const Suggestions = styled.div`
+export const Suggestions = styled.ul`
 	position: absolute;
 	background-color: var(--white);
 	box-shadow: var(--box-shadow);
 	border-radius: 8px;
 	top: 3.5em;
 	width: 98%;
+    z-index: 100;
 
-	p {
-		margin: 0 0.5em;
-        padding: 0.25em 0.5em;
-		text-align: start;
-		display: flex;
-		align-items: center;
-		margin: 0;
-		cursor: pointer;
-
-        &:first-of-type {
-            padding-top: .25em;
-
-            &:hover {
-                border-radius: 8px 8px 0 0;
-            }
-        }
-
-        &:last-of-type {
-            padding-bottom: .25em;
-
-            &:hover {
-                border-radius: 0 0 8px 8px;
-            }
-        }
-
-		&:hover,
-		:focus-visible {
-			background-color: #d9dbff;
-			color: #3f51b5;
-		}
+	li {
+        list-style-type: none;
 	}
+
+    button {
+            border: none;
+            background-color: inherit;
+            font-size: inherit;
+            padding: 0.25em 0.5em;
+            text-align: start;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            cursor: pointer;
+            gap: .5em;
+            width: 100%;
+    
+            &:first-of-type {
+                padding-top: .25em;
+    
+                &:hover,  &:focus-visible{
+                    border-radius: 8px 8px 0 0;
+                }
+            }
+    
+            &:last-of-type {
+                padding-bottom: .25em;
+            }
+    
+            &:hover,
+            &:focus-visible {
+                background-color: #d9dbff;
+                color: #3f51b5;
+            }
+        }
+
+    footer {
+        font-size: var(--fs-small);
+        margin: .25em 0;
+    }
 `;
 
 export const Button = styled.button`
@@ -109,9 +119,9 @@ export const SettingsPanel = styled.aside`
 	box-sizing: border-box;
 	position: absolute;
 	top: 60px;
-	width: 100%;
+	width: 98%;
 	background-color: var(--white);
-	padding: 2em 1em;
+	padding: 2em;
 	display: ${({ open }) => (open ? 'flex' : 'none')};
 	justify-content: space-between;
 	flex-wrap: wrap;

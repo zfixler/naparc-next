@@ -22,13 +22,13 @@ const getPosition = async (i) => {
 
 export const search = async (body) => {
 
-	const searchArea = await getPosition(body.searchInput).catch((error) =>
-		console.log(error)
-	);
+	// const searchArea = await getPosition(body.searchInput).catch((error) =>
+	// 	console.log(error)
+	// );
 
-    if(typeof searchArea !== 'string'){
+    if(typeof body.searchInput !== 'string'){
         const congArr = naparc.map((cong) => {
-            const d = distance(cong.lat, cong.long, searchArea.lat, searchArea.long);
+            const d = distance(cong.lat, cong.long, body.searchInput.lat, body.searchInput.long);
             cong.d = Math.round(d);
             return cong;
         });
@@ -42,6 +42,6 @@ export const search = async (body) => {
         const sorted = filteredResults.sort((a, b) => a.d - b.d);
         return sorted;
     } else {
-        return searchArea
+        return body.searchInput
     }
 };
