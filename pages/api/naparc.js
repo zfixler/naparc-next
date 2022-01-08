@@ -12,7 +12,6 @@ export default async function handler(req, res) {
 				message: results
 			}
 		}
-		console.log(JSON.stringify(data))
 		res.status(200).json(data);
 	} else {
 		const totalCount = await results.length;

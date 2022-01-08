@@ -88,7 +88,7 @@ function SearchContext({ children }) {
 			setSuggestions('');
 			setSearchInput('');
 			setResults(null);
-			setCurrentPage(null)
+			setCurrentPage(null);
 		}
 	}, [router.asPath]);
 
@@ -115,22 +115,32 @@ function SearchContext({ children }) {
 			},
 		});
 
+		const regexUs = /\d{5}/;
+		const regexCa = /[A-Z]\d[A-Z]/;
+
 		if (query !== undefined) {
 			//query taken from suggestion click
 			body.body.searchInput = query;
-		} else if (suggestions.results !== undefined && suggestions.results.length > 0){
-			console.log(suggestions)
+		} else if (
+			suggestions.results !== undefined &&
+			suggestions.results.length > 0
+		) {
 			//search input submits first suggestion
 			body.body.searchInput = {
 				long: suggestions.results[0].lon,
 				lat: suggestions.results[0].lat,
-			}} else {
-				setError('There was a problem with your search. Please try a different search.')
-				console.log(error)
-				setLoading(false)
-				return
-			}
-	
+			};
+		} else if((regexUs.test(searchInput) && searchInput.length === 5) || (regexCa.test(searchInput) && searchInput.length === 3)){
+			body.body.searchInput = searchInput;
+		} 
+		else {
+			setError(
+				'There was a problem with your search. Please try a different search.'
+			);
+			console.log(error);
+			setLoading(false);
+			return;
+		}
 
 		const res = await fetch('api/naparc', {
 			method: 'POST',
@@ -177,7 +187,7 @@ function SearchContext({ children }) {
 	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
 		setSearchInput(e.target.value);
-		console.log(searchInput)
+		console.log(searchInput);
 		if (searchInput.length > 3) {
 			if (currentTimeout) {
 				clearTimeout(currentTimeout);
