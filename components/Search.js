@@ -1,11 +1,11 @@
 //Library imports
-import { useState, useEffect, useRef, useContext } from 'react';
-import { useRouter } from 'next/router';
+import { useRef, useContext, useState, useEffect } from 'react';
 //Context import
 import { SearchContext } from '../context/SearchContext';
 //Component imports
 import Checkbox from './Checkbox';
 import Loading from './Loading';
+import Suggestions from './Suggestions'
 //Styled Components
 import {
 	SearchContainer,
@@ -15,14 +15,13 @@ import {
 	Button,
 	SettingsPanel,
 	DenominationSettings,
-	Suggestions,
+	Error
 } from './styled/Search.styled';
 //Icons
-import { SettingsIcon, SearchIcon, CloseIcon, Pin } from './icons';
+import { SettingsIcon, SearchIcon, CloseIcon } from './icons';
 
 //Component for handling search input and settings
 function Search() {
-	const router = useRouter();
 	//Search state from context
 	const {
 		isSettingsOpen,
@@ -36,24 +35,35 @@ function Search() {
 		setDis,
 		loading,
 		suggestions,
-		setSuggestions,
 		handleSubmit,
 		selectChange,
-		handleInput
+		handleInput,
+		showSuggestions,
+		setShowSuggestions,
+		error,
+		setError
 	} = useContext(SearchContext);
+
+	const [inputFocus, setInputFocus] = useState(false)
 
 	//Refs
 	const inputRef = useRef(null);
+	const settingsRef = useRef(null);
+
 	const selectText = selectNone ? 'Select All' : 'Select None';
 
-	//TODO: Fix issue with url change not being reflected in application state.
+	//Initiate input focus on mount
+	useEffect(() => {
+		inputRef.current.focus()
+
+	}, [])
 
 	return (
 		<SearchContainer>
 			<Form onSubmit={(e) => handleSubmit(e)}>
 				<SearchBar>
 					<InputWrapper>
-						<SearchIcon height="30" width="30" color="inherit" />
+						<SearchIcon height="30" width="30" color={inputFocus ? "var(--blue)" : "#828282"} />
 						<input
 							ref={inputRef}
 							type="search"
@@ -61,41 +71,33 @@ function Search() {
 							placeholder="Enter search location"
 							value={searchInput}
 							onChange={(e) => handleInput(e)}
+							onFocus={() => {
+								setShowSuggestions(true)
+								setInputFocus(!inputFocus)
+							}}
+							onBlur={() => setInputFocus(!inputFocus)}
 						/>
 						<SettingsIcon
 							height="30"
 							width="30"
-							color="inherit"
+							color={isSettingsOpen ? "var(--blue)" : "#828282"}
 							className="settingsIcon"
 							onClick={() => setIsSettingsOpen(!isSettingsOpen)}
 						/>
 					</InputWrapper>
 					<Button>Search</Button>
+					{error && <div className="error">{error}</div>}
 				</SearchBar>
-				{suggestions && inputRef.current === document.activeElement && (
-					<Suggestions role="tablist">
-						{suggestions.results.map((s) => (
-							<li role="tab">
-								<button
-									onClick={(e) => {
-										setSearchInput(s.formatted);
-										setSuggestions('');
-										handleSubmit(e, { long: s.lon, lat: s.lat });
-									}}>
-									<Pin height="30" width="30" color="var(--blue)" />
-									{s.formatted}
-								</button>
-							</li>
-						))}
-						<footer>
-							Powered by <a href="https://www.geoapify.com/">Geoapify</a>
-						</footer>
-					</Suggestions>
+				{suggestions && searchInput !== '' && showSuggestions && (
+					<Suggestions
+						role="tablist"
+						props={{ suggestions, handleSubmit, setSearchInput, setShowSuggestions, inputRef, setError }}
+					/>
 				)}
-				<SettingsPanel open={isSettingsOpen}>
+				<SettingsPanel ref={settingsRef} open={isSettingsOpen}>
 					<CloseIcon
-						height="15"
-						width="15"
+						height="25"
+						width="25"
 						color="var(--blue)"
 						className="closeIcon"
 						onClick={() => setIsSettingsOpen(!isSettingsOpen)}
@@ -109,7 +111,7 @@ function Search() {
 							}
 						}}></div>
 					<DenominationSettings>
-						<subtitle className="settingsTitle">Denominations</subtitle>
+						<h4 className="settingsTitle">Denominations</h4>
 						<Checkbox
 							name={'opc'}
 							select={selectChange}

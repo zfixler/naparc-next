@@ -1,12 +1,14 @@
 //Library imports
 import React, { createContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react/cjs/react.production.min';
 
 //Context
 const Context = createContext();
 
 function SearchContext({ children }) {
-    const router = useRouter();
+	const router = useRouter();
+	//Search state
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 	const [searchInput, setSearchInput] = useState('');
 	const [denominations, setDenominations] = useState({
@@ -26,6 +28,8 @@ function SearchContext({ children }) {
 	const [results, setResults] = useState(null);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [error, setError] = useState(null);
+	const [isInputFocused, setIsInputFocused] = useState(null);
+	const [showSuggestions, setShowSuggestions] = useState(false);
 
 	//Use effect for SelectAll/SelectNone value
 	useEffect(() => {
@@ -65,16 +69,34 @@ function SearchContext({ children }) {
 		}
 	}, [router.query.pg]);
 
-    //useEffect for URL reset
-    useEffect(() => {
+	useEffect(() => {
+		if (results !== null) {
+			let url = `?pg=${currentPage + 1}`;
+			router.push(url, undefined, { shallow: true });
+		}
+	}, [currentPage]);
+
+	//useEffect for URL reset
+	useEffect(() => {
 		if (router.asPath !== '/') {
 			router.push('/');
 		}
 	}, []);
 
+	useEffect(() => {
+		if (router.asPath === '/') {
+			setSuggestions('');
+			setSearchInput('');
+			setResults(null);
+			setCurrentPage(null)
+		}
+	}, [router.asPath]);
+
 	//Functions for handling search inputs and submission to server
+	//e comes from form submit via search button, query comes from suggestion selection
 	async function handleSubmit(e, query) {
 		e.preventDefault();
+		setError(null);
 		setLoading(true);
 		setCurrentPage(0);
 
@@ -94,13 +116,21 @@ function SearchContext({ children }) {
 		});
 
 		if (query !== undefined) {
+			//query taken from suggestion click
 			body.body.searchInput = query;
-		} else {
+		} else if (suggestions.results !== undefined && suggestions.results.length > 0){
+			console.log(suggestions)
+			//search input submits first suggestion
 			body.body.searchInput = {
 				long: suggestions.results[0].lon,
 				lat: suggestions.results[0].lat,
-			};
-		}
+			}} else {
+				setError('There was a problem with your search. Please try a different search.')
+				console.log(error)
+				setLoading(false)
+				return
+			}
+	
 
 		const res = await fetch('api/naparc', {
 			method: 'POST',
@@ -118,7 +148,6 @@ function SearchContext({ children }) {
 				setLoading(false);
 			} else {
 				setResults(data);
-				setSuggestions('');
 				let url = `?pg=${currentPage + 1}`;
 				router.push(url, undefined, { shallow: true });
 				setLoading(false);
@@ -135,6 +164,7 @@ function SearchContext({ children }) {
 		}
 	}
 
+	//function for handling denomination selection
 	function selectChange(e) {
 		const { name, checked } = e.target;
 		setDenominations((prevState) => {
@@ -144,18 +174,24 @@ function SearchContext({ children }) {
 			};
 		});
 	}
-
+	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
 		setSearchInput(e.target.value);
+		console.log(searchInput)
 		if (searchInput.length > 3) {
-			setTimeout(() => {
+			if (currentTimeout) {
+				clearTimeout(currentTimeout);
+			}
+
+			const currentTimeout = setTimeout(() => {
 				fetch(
-					`https://api.geoapify.com/v1/geocode/autocomplete?text=${searchInput}&filter=countrycode:us,ca&format=json&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`
+					`https://api.geoapify.com/v1/geocode/autocomplete?text=${searchInput}&type=city&filter=countrycode:us,ca&format=json&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`
 				)
 					.then((res) => res.json())
 					.then((data) => setSuggestions(data))
+					.then(() => console.log(suggestions))
 					.catch((error) => console.log(error));
-			}, 300);
+			}, 200);
 		}
 	}
 
@@ -185,6 +221,10 @@ function SearchContext({ children }) {
 				setCurrentPage,
 				error,
 				setError,
+				isInputFocused,
+				setIsInputFocused,
+				showSuggestions,
+				setShowSuggestions,
 			}}>
 			{children}
 		</Context.Provider>

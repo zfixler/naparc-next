@@ -15,6 +15,12 @@ function Pagination() {
 	for (let i = 0; i < pageNum; i++) {
 		pages.push(i);
 	}
+	//function for button click
+	function handleClick(page){
+		setCurrentPage(page)
+		window.scrollTo(0, 0)
+	}
+
 	//Only render component if multiple pages of results are available
 	if (results !== null && results.meta.pageCount > 1) {
 		return (
@@ -25,13 +31,13 @@ function Pagination() {
 							<PageButton
 								key={p}
 								current={true}
-								onClick={() => setCurrentPage(p)}>
+								onClick={() => handleClick(p)}>
 								{p + 1}
 							</PageButton>
 						);
 					} else {
 						return (
-							<PageButton key={p} onClick={() => setCurrentPage(p)}>
+							<PageButton key={p} onClick={() => handleClick(p)}>
 								{p + 1}
 							</PageButton>
 						);

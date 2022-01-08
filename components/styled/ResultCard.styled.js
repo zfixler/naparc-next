@@ -18,6 +18,7 @@ export const Card = styled.article`
 		color: var(--blue);
 		text-transform: uppercase;
 		text-align: center;
+		margin-top: .75em;
 	}
 
 	header {

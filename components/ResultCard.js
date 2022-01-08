@@ -21,7 +21,6 @@ function ResultCard({ result }) {
 			<Card>
 				<header>
 					<h2>{name}</h2>
-					<p>{denom}</p>
 				</header>
 				<InfoWrapper>
 					{isPastor && (
@@ -37,6 +36,7 @@ function ResultCard({ result }) {
 							)}
 						</>
 					)}
+					<p><span>Denomination:</span> {denom}</p>
 					<p>
 						<span>{isPhone && 'Phone: '}</span>
 						{isPhone && phone}

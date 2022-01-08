@@ -19,7 +19,18 @@ export const Form = styled.form`
 `;
 
 export const SearchBar = styled.div`
+	position: relative;
 	display: flex;
+	gap: .5em;
+
+	.error {
+		position: absolute;
+		font-size: var(--fs-small);
+		font-weight: bold;
+		color: red;
+		text-align: center;
+		top: 4.5em;
+	 }
 `;
 
 export const InputWrapper = styled.div`
@@ -29,7 +40,6 @@ export const InputWrapper = styled.div`
 	background-color: var(--white);
 	border-radius: 8px;
 	box-shadow: var(--box-shadow);
-	max-width: 100%;
 	position: relative;
 
 	input {
@@ -37,7 +47,7 @@ export const InputWrapper = styled.div`
 		padding: 0.5em 1em;
 		background-color: var(--white);
 		font-size: 1.1rem;
-		max-width: 100%;
+		max-width: 47vw;
 	}
 
 	input:focus {
@@ -45,61 +55,10 @@ export const InputWrapper = styled.div`
 	}
 `;
 
-export const Suggestions = styled.ul`
-	position: absolute;
-	background-color: var(--white);
-	box-shadow: var(--box-shadow);
-	border-radius: 8px;
-	top: 3.5em;
-	width: 98%;
-    z-index: 100;
-
-	li {
-        list-style-type: none;
-	}
-
-    button {
-            border: none;
-            background-color: inherit;
-            font-size: inherit;
-            padding: 0.25em 0.5em;
-            text-align: start;
-            display: flex;
-            align-items: center;
-            margin: 0;
-            cursor: pointer;
-            gap: .5em;
-            width: 100%;
-    
-            &:first-of-type {
-                padding-top: .25em;
-    
-                &:hover,  &:focus-visible{
-                    border-radius: 8px 8px 0 0;
-                }
-            }
-    
-            &:last-of-type {
-                padding-bottom: .25em;
-            }
-    
-            &:hover,
-            &:focus-visible {
-                background-color: #d9dbff;
-                color: #3f51b5;
-            }
-        }
-
-    footer {
-        font-size: var(--fs-small);
-        margin: .25em 0;
-    }
-`;
-
 export const Button = styled.button`
 	font-size: 1.1rem;
 	padding: 0.25em 0.5em;
-	margin: 0 0.5em;
+	margin: 0;
 	background-color: var(--blue);
 	color: var(--white);
 	border: none;
@@ -118,8 +77,8 @@ export const Button = styled.button`
 export const SettingsPanel = styled.aside`
 	box-sizing: border-box;
 	position: absolute;
-	top: 60px;
-	width: 98%;
+	top: 3.5em;
+	width: 100%;
 	background-color: var(--white);
 	padding: 2em;
 	display: ${({ open }) => (open ? 'flex' : 'none')};
@@ -128,7 +87,7 @@ export const SettingsPanel = styled.aside`
 	gap: 0.5em;
 	border-radius: 8px;
 	box-shadow: var(--box-shadow);
-	z-index: 50;
+	z-index: 500;
 
 	.settingsTitle {
 		color: var(--blue);
@@ -164,3 +123,4 @@ export const DenominationSettings = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 `;
+

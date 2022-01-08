@@ -6,7 +6,7 @@ export const HeaderContainer = styled.header`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    
+
     nav {
         display: flex;
         flex-direction: column;
@@ -22,5 +22,9 @@ export const HeaderContainer = styled.header`
         text-decoration: none;
         color: var(--blue);
         font-weight: bold;
+    }
+
+    .active {
+        border-bottom: 1px solid var(--blue);
     }
 `;

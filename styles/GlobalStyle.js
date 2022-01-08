@@ -10,19 +10,15 @@ const GlobalStyle = createGlobalStyle`
     }
 
     :root {
-        --font-family: 'Poppins', sans-serif;
-
         /* Colors */
-
+        
         --alice: #eff4fb;
         --white: #fff;
         --blue: #060EC8;
-
-
-
-        --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        
         /* Typography */
-
+        
+        --font-family: 'Poppins', sans-serif;
         --fs-h1: 2.488rem;
         --fs-h2: 2.074rem;
         --fs-h3: 1.728rem;
@@ -30,6 +26,9 @@ const GlobalStyle = createGlobalStyle`
         --fs-h5: 1.2rem;
         --fs-small: 0.833rem;
 
+        /* Other */
+
+        --box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
     html, body, * {
@@ -38,7 +37,6 @@ const GlobalStyle = createGlobalStyle`
         font-family: var(--font-family);
         
     }
-
 
     html, body {
         background-color: var(--alice);
@@ -64,6 +62,7 @@ const GlobalStyle = createGlobalStyle`
         gap: 2em;
         justify-content: center;
     }
+
 `;
 
 export default GlobalStyle;
