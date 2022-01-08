@@ -43,6 +43,16 @@ export const Card = styled.article`
 		}
 	}
 
+	.disabled {
+			background-color: var(--gray);
+			pointer-events: none;
+
+			&:hover, &:focus {
+				background-color: var(--gray);
+				color: var(--white);
+			}
+		}
+
 	span {
 		font-weight: bold;
 		color: var(--blue);

@@ -15,10 +15,12 @@ const GlobalStyle = createGlobalStyle`
         --alice: #eff4fb;
         --white: #fff;
         --blue: #060EC8;
+        --gray: #828282;
         
         /* Typography */
         
         --font-family: 'Poppins', sans-serif;
+
         --fs-h1: 2.488rem;
         --fs-h2: 2.074rem;
         --fs-h3: 1.728rem;
