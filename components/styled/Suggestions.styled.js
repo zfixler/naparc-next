@@ -50,6 +50,12 @@ export const SuggestionBox = styled.ul`
 			background-color: #d9dbff;
 			color: #3f51b5;
 		}
+
+	}
+	
+	.active {
+		background-color: #d9dbff;
+		color: #3f51b5;
 	}
 
 	footer {

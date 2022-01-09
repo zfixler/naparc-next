@@ -1,7 +1,6 @@
 //Library imports
 import React, { createContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react/cjs/react.production.min';
 
 //Context
 const Context = createContext();
@@ -30,6 +29,8 @@ function SearchContext({ children }) {
 	const [error, setError] = useState(null);
 	const [isInputFocused, setIsInputFocused] = useState(null);
 	const [showSuggestions, setShowSuggestions] = useState(false);
+	//state for active suggestions
+	const [activeSuggestion, setActiveSuggestion] = useState(0);
 
 	//Use effect for SelectAll/SelectNone value
 	useEffect(() => {
@@ -94,6 +95,7 @@ function SearchContext({ children }) {
 
 	//Functions for handling search inputs and submission to server
 	//e comes from form submit via search button, query comes from suggestion selection
+	//TODO: Correct submission so that it does not mismatch depending on how it is submitted
 	async function handleSubmit(e, query) {
 		e.preventDefault();
 		setError(null);
@@ -121,19 +123,23 @@ function SearchContext({ children }) {
 		if (query !== undefined) {
 			//query taken from suggestion click
 			body.body.searchInput = query;
+			console.log(query)
 		} else if (
+			query === undefined &&
 			suggestions.results !== undefined &&
 			suggestions.results.length > 0
 		) {
 			//search input submits first suggestion
 			body.body.searchInput = {
-				long: suggestions.results[0].lon,
-				lat: suggestions.results[0].lat,
+				long: suggestions.results[activeSuggestion].lon,
+				lat: suggestions.results[activeSuggestion].lat,
 			};
-		} else if((regexUs.test(searchInput) && searchInput.length === 5) || (regexCa.test(searchInput) && searchInput.length === 3)){
+		} else if (
+			(regexUs.test(searchInput) && searchInput.length === 5) ||
+			(regexCa.test(searchInput) && searchInput.length === 3)
+		) {
 			body.body.searchInput = searchInput;
-		} 
-		else {
+		} else {
 			setError(
 				'There was a problem with your search. Please try a different search.'
 			);
@@ -149,10 +155,10 @@ function SearchContext({ children }) {
 			},
 			body: JSON.stringify(body),
 		});
-
+		console.log(res.status)
 		if (res.status === 200) {
 			const data = await res.json();
-
+			console.log(data)
 			if (data.meta.error === true) {
 				setError(data.data.message);
 				setLoading(false);
@@ -187,21 +193,58 @@ function SearchContext({ children }) {
 	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
 		setSearchInput(e.target.value);
-		console.log(searchInput);
-		if (searchInput.length > 3) {
+
+		if (e.target.value.length > 3) {
 			if (currentTimeout) {
 				clearTimeout(currentTimeout);
 			}
 
 			const currentTimeout = setTimeout(() => {
-				fetch(
-					`https://api.geoapify.com/v1/geocode/autocomplete?text=${searchInput}&type=city&filter=countrycode:us,ca&format=json&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`
-				)
+				let url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${e.target.value}&type=city&filter=countrycode:us,ca&format=json&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`;
+
+				fetch(url)
 					.then((res) => res.json())
 					.then((data) => setSuggestions(data))
-					.then(() => console.log(suggestions))
 					.catch((error) => console.log(error));
-			}, 200);
+			}, 300);
+		}
+	}
+
+	//function for handling keyboard events
+	function handleKeyDown(e) {
+		if (suggestions.results !== undefined) {
+			switch (e.key) {
+				case 'Down':
+					break;
+				case 'ArrowDown':
+					if (activeSuggestion < suggestions.results.length - 1) {
+						setActiveSuggestion(activeSuggestion + 1);
+					} else {
+						setActiveSuggestion(0);
+					}
+					break;
+				case 'Up':
+					break;
+				case 'ArrowUp':
+					if (activeSuggestion > 0) {
+						setActiveSuggestion(activeSuggestion - 1);
+					} else {
+						setActiveSuggestion(suggestions.results.length - 1);
+					}
+					break;
+				case 'Esc':
+					break;
+				case 'Escape':
+					break;
+				case 'Enter':
+					setSearchInput(suggestions.results[activeSuggestion].formatted);
+					handleSubmit(e, {
+						long: suggestions.results[activeSuggestion].lon,
+						lat: suggestions.results[activeSuggestion].lat,
+					});
+				default:
+					return;
+			}
 		}
 	}
 
@@ -235,6 +278,8 @@ function SearchContext({ children }) {
 				setIsInputFocused,
 				showSuggestions,
 				setShowSuggestions,
+				handleKeyDown,
+				activeSuggestion,
 			}}>
 			{children}
 		</Context.Provider>

@@ -41,7 +41,9 @@ function Search() {
 		showSuggestions,
 		setShowSuggestions,
 		error,
-		setError
+		setError,
+		handleKeyDown,
+		activeSuggestion,
 	} = useContext(SearchContext);
 
 	const [inputFocus, setInputFocus] = useState(false)
@@ -55,8 +57,14 @@ function Search() {
 	//Initiate input focus on mount
 	useEffect(() => {
 		inputRef.current.focus()
-
 	}, [])
+	
+	//Always show suggestions when input focused
+	useEffect(() => {
+		if(inputRef.current === document.activeElement){
+			setShowSuggestions(true)
+		}
+	}, [inputRef.current, showSuggestions])
 
 	return (
 		<SearchContainer>
@@ -65,6 +73,7 @@ function Search() {
 					<InputWrapper>
 						<SearchIcon height="30" width="30" color={inputFocus ? "var(--blue)" : "#828282"} />
 						<input
+							onKeyDown={e => handleKeyDown(e)}
 							ref={inputRef}
 							type="search"
 							name="searchInput"
@@ -88,10 +97,10 @@ function Search() {
 					<Button>Search</Button>
 					{error && <div className="error">{error}</div>}
 				</SearchBar>
-				{suggestions && searchInput !== '' && showSuggestions && (
+				{suggestions && showSuggestions && (
 					<Suggestions
 						role="tablist"
-						props={{ suggestions, handleSubmit, setSearchInput, setShowSuggestions, inputRef, setError }}
+						props={{ suggestions, handleSubmit, setSearchInput, setShowSuggestions, inputRef, setError, activeSuggestion }}
 					/>
 				)}
 				<SettingsPanel ref={settingsRef} open={isSettingsOpen}>

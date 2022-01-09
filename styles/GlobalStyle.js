@@ -63,6 +63,7 @@ const GlobalStyle = createGlobalStyle`
         flex-wrap: wrap;
         gap: 2em;
         justify-content: center;
+        width: 100%;
     }
 
 `;

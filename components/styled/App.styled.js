@@ -9,5 +9,5 @@ export const AppWrapper = styled.div`
 export const AppContent = styled.main`
 	padding: 0 1em;
 	margin: 0 auto;
-	width: min(90%, 1200px);
+	width: min(90%, 1300px);
 `;

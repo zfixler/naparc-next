@@ -6,8 +6,8 @@ export const Card = styled.article`
 	border-radius: 8px;
 	box-shadow: var(--box-shadow);
 	width: min(450px, 85vw);
-	margin: 0 auto;
 	height: 95%;
+	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

@@ -48,8 +48,8 @@ function ResultCard({ result }) {
 				</InfoWrapper>
 				<footer>
 					<ButtonWrapper>
-						<a href={`mailto:${isEmail && email}`} className={isEmail === false && 'disabled'}>Email</a>
-						<a href={`${isWebsite && website}`} className={isWebsite === false && 'disabled'}>Website</a>
+						<a href={`mailto:${isEmail && email}`} className={isEmail === false ? 'disabled' : ''}>Email</a>
+						<a href={`${isWebsite && website}`} className={isWebsite === false ? 'disabled' : ''} target="_blank">Website</a>
 					</ButtonWrapper>
 					<p>Distance: {d} miles.</p>
 				</footer>
