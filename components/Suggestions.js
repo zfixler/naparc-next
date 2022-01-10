@@ -35,8 +35,7 @@ function Suggestions({ props }) {
 						<button
 							className={activeSuggestion === i ? 'active' : ''}
 							onClick={(e) => {
-								setSearchInput(s.formatted);
-								handleSubmit(e, { long: s.lon, lat: s.lat });
+								handleSubmit(e, i);
 							}}>
 							<Pin height="30" width="30" color="var(--blue)" />
 							{s.formatted}

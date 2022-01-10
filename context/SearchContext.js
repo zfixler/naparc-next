@@ -96,7 +96,7 @@ function SearchContext({ children }) {
 	//Functions for handling search inputs and submission to server
 	//e comes from form submit via search button, query comes from suggestion selection
 	//TODO: Correct submission so that it does not mismatch depending on how it is submitted
-	async function handleSubmit(e, query) {
+	async function handleSubmit(e, i) {
 		e.preventDefault();
 		setError(null);
 		setLoading(true);
@@ -120,20 +120,31 @@ function SearchContext({ children }) {
 		const regexUs = /\d{5}/;
 		const regexCa = /[A-Z]\d[A-Z]/;
 
-		if (query !== undefined) {
-			//query taken from suggestion click
-			body.body.searchInput = query;
-			console.log(query)
-		} else if (
-			query === undefined &&
-			suggestions.results !== undefined &&
-			suggestions.results.length > 0
-		) {
-			//search input submits first suggestion
+		if (i !== null) {
+			//index taken from suggestion click
+			body.body.searchInput = {
+				long: suggestions.results[i].lon,
+				lat: suggestions.results[i].lat,
+			};
+			setSearchInput(suggestions.results[i].formatted);
+		} else if (activeSuggestion) {
+			//search input submits active suggestion from keyboard
 			body.body.searchInput = {
 				long: suggestions.results[activeSuggestion].lon,
 				lat: suggestions.results[activeSuggestion].lat,
 			};
+			setSearchInput(suggestions.results[activeSuggestion].formatted);
+		} else if (
+			//search input submits first result
+			activeSuggestion === null &&
+			suggestions.results !== undefined &&
+			suggestions.results.length > 0
+		) {
+			body.body.searchInput = {
+				long: suggestions.results[0].lon,
+				lat: suggestions.results[0].lat,
+			};
+			setSearchInput(suggestions.results[0].formatted);
 		} else if (
 			(regexUs.test(searchInput) && searchInput.length === 5) ||
 			(regexCa.test(searchInput) && searchInput.length === 3)
@@ -155,10 +166,12 @@ function SearchContext({ children }) {
 			},
 			body: JSON.stringify(body),
 		});
-		console.log(res.status)
+
+		setShowSuggestions(false);
+
 		if (res.status === 200) {
 			const data = await res.json();
-			console.log(data)
+
 			if (data.meta.error === true) {
 				setError(data.data.message);
 				setLoading(false);
@@ -215,6 +228,11 @@ function SearchContext({ children }) {
 		if (suggestions.results !== undefined) {
 			switch (e.key) {
 				case 'Down':
+					if (activeSuggestion < suggestions.results.length - 1) {
+						setActiveSuggestion(activeSuggestion + 1);
+					} else {
+						setActiveSuggestion(0);
+					}
 					break;
 				case 'ArrowDown':
 					if (activeSuggestion < suggestions.results.length - 1) {
@@ -224,6 +242,11 @@ function SearchContext({ children }) {
 					}
 					break;
 				case 'Up':
+					if (activeSuggestion > 0) {
+						setActiveSuggestion(activeSuggestion - 1);
+					} else {
+						setActiveSuggestion(suggestions.results.length - 1);
+					}
 					break;
 				case 'ArrowUp':
 					if (activeSuggestion > 0) {
@@ -233,15 +256,13 @@ function SearchContext({ children }) {
 					}
 					break;
 				case 'Esc':
+					setShowSuggestions(false);
 					break;
 				case 'Escape':
+					setShowSuggestions(false);
 					break;
 				case 'Enter':
-					setSearchInput(suggestions.results[activeSuggestion].formatted);
-					handleSubmit(e, {
-						long: suggestions.results[activeSuggestion].lon,
-						lat: suggestions.results[activeSuggestion].lat,
-					});
+					handleSubmit(e, activeSuggestion);
 				default:
 					return;
 			}

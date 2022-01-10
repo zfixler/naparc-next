@@ -64,11 +64,11 @@ function Search() {
 		if(inputRef.current === document.activeElement){
 			setShowSuggestions(true)
 		}
-	}, [inputRef.current, showSuggestions])
+	}, [inputRef.current])
 
 	return (
 		<SearchContainer>
-			<Form onSubmit={(e) => handleSubmit(e)}>
+			<Form onSubmit={(e) => handleSubmit(e, null)}>
 				<SearchBar>
 					<InputWrapper>
 						<SearchIcon height="30" width="30" color={inputFocus ? "var(--blue)" : "#828282"} />
