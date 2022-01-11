@@ -23,7 +23,7 @@ function SearchContext({ children }) {
 	const [selectNone, setSelectNone] = useState(false);
 	const [dis, setDis] = useState(25);
 	const [loading, setLoading] = useState(false);
-	const [suggestions, setSuggestions] = useState();
+	const [suggestions, setSuggestions] = useState(null);
 	const [results, setResults] = useState(null);
 	const [currentPage, setCurrentPage] = useState(0);
 	const [error, setError] = useState(null);
@@ -86,8 +86,8 @@ function SearchContext({ children }) {
 
 	useEffect(() => {
 		if (router.asPath === '/') {
-			setSuggestions('');
 			setSearchInput('');
+			setSuggestions(null);
 			setResults(null);
 			setCurrentPage(null);
 		}
@@ -225,7 +225,7 @@ function SearchContext({ children }) {
 
 	//function for handling keyboard events
 	function handleKeyDown(e) {
-		if (suggestions.results !== undefined) {
+		if (suggestions !== null) {
 			switch (e.key) {
 				case 'Down':
 					if (activeSuggestion < suggestions.results.length - 1) {
