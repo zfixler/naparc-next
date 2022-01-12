@@ -34,8 +34,8 @@ Accordion.Title = function AccordionTitle({ children, ...restProps }) {
 	const { isToggled, setIsToggled } = useContext(ToggleContext);
 
 	return (
-		<Title {...restProps} onClick={() => setIsToggled(!isToggled)}>
-			{children}
+		<Title isToggled={isToggled} onClick={() => setIsToggled(!isToggled)}>
+			<h2>{children}</h2>
 		</Title>
 	);
 };
@@ -44,17 +44,8 @@ Accordion.Body = function AccordionBody({ children, ...restProps }) {
 	const { isToggled } = useContext(ToggleContext);
 
 	return (
-		<AnimatePresence>
-			{isToggled && (
-				<Body
-					initial={{ opacity: 0, height: 0 }}
-					animate={{ opacity: 1, height: 'auto' }}
-					transition={{ duration: 0.3 }}
-					exit={{ opacity: 0, height: 0 }}
-					{...restProps}>
-					{children}
-				</Body>
-			)}
-		</AnimatePresence>
+		<Body className={isToggled ? '' : 'collapsed'} {...restProps}>
+			{children}
+		</Body>
 	);
 };

@@ -22,9 +22,10 @@ export const HeaderContainer = styled.header`
         text-decoration: none;
         color: var(--blue);
         font-weight: bold;
+        border-bottom: 2px solid var(--alice);
     }
 
     .active {
-        border-bottom: 1px solid var(--blue);
+        border-bottom: 2px solid var(--blue);
     }
 `;

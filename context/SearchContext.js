@@ -208,18 +208,17 @@ function SearchContext({ children }) {
 		setSearchInput(e.target.value);
 
 		if (e.target.value.length > 3) {
-			if (currentTimeout) {
-				clearTimeout(currentTimeout);
-			}
-
-			const currentTimeout = setTimeout(() => {
-				let url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${e.target.value}&type=city&filter=countrycode:us,ca&format=json&apiKey=${process.env.NEXT_PUBLIC_GEOAPIFY_KEY}`;
-
-				fetch(url)
-					.then((res) => res.json())
-					.then((data) => setSuggestions(data))
-					.catch((error) => console.log(error));
-			}, 300);
+			const res = await fetch('/api/autocomplete', {
+				body: JSON.stringify({
+				  input: e.target.value
+				}),
+				headers: {
+				  'Content-Type': 'application/json'
+				},
+				method: 'POST'
+			  })
+			const data = await res.json();
+			setSuggestions(data)
 		}
 	}
 

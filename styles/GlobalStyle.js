@@ -2,10 +2,10 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
         html {
-          font-size: 100%;
+          font-size: 87.5%;
 
         @media (min-width: 40em){
-            font-size: 112.5%;
+            font-size: 100%;
         }
     }
 
@@ -37,7 +37,6 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         font-family: var(--font-family);
-        
     }
 
     html, body {
@@ -45,6 +44,16 @@ const GlobalStyle = createGlobalStyle`
         height: 100%;
         width: 100%;
     }
+
+    body {
+        overflow-y: scroll;
+    }
+
+    h1 {font-size: var(--fs-h1);}
+    h2 {font-size: var(--fs-h2);}
+    h3 {font-size: var(--fs-h3);}
+    h4 {font-size: var(--fs-h4);}
+    h5 {font-size: var(--fs-h5);}
 
     header {
         text-align: center;
