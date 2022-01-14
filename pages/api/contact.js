@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 export default async function handler(req, res) {
-	axios.post('https://submit-form.com/aCxnC6H7', {
+	axios.post(`https://submit-form.com/${process.env.FORMSPARK_ID}`, {
 		name: req.body.name,
 		email: req.body.email,
 		message: req.body.message,
