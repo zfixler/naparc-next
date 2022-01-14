@@ -15,9 +15,7 @@ export const Card = styled.article`
 	gap: 1em;
 
 	h2 {
-		color: var(--blue);
 		text-transform: uppercase;
-		text-align: center;
 		margin-top: .75em;
 	}
 

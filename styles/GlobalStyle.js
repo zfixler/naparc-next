@@ -49,6 +49,11 @@ const GlobalStyle = createGlobalStyle`
         overflow-y: scroll;
     }
 
+    h1, h2 {
+        text-align: center;
+        color: var(--blue);
+    }
+
     h1 {font-size: var(--fs-h1);}
     h2 {font-size: var(--fs-h2);}
     h3 {font-size: var(--fs-h3);}

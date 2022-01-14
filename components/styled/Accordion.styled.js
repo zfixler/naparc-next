@@ -6,8 +6,6 @@ export const Container = styled.section`
     margin: 0 auto;
 
     h1 {
-        text-align: center;
-        color: var(--blue);
         margin-bottom: .75em;
     }
 `;
@@ -23,10 +21,12 @@ export const Title = styled.button`
     width: 100%;
     position: relative;
     border: 0;
-    text-align: inherit;
 
     h2 {
         font-size: var(--fs-h3);
+        font-weight: 400;
+        text-align: left;
+        margin-left: .5em;
     }
    
 
@@ -37,7 +37,7 @@ export const Title = styled.button`
         width: 30px;
         background-color: var(--blue);
         top: calc(50% - 15px);
-        right: 1em;
+        right: 1.5em;
         clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 25% 100%, 50% 50%, 25% 0%);
         transform: ${({isToggled}) => isToggled ? 'rotate(90deg)' : 'rotate(0deg)'};
     }
@@ -56,6 +56,7 @@ export const Body = styled.div`
     box-sizing: border-box;
     max-height: 1000px;
     transition: all 0.3s ease;
-    padding: .5em .75em;
+    padding: .5em 1.5em;
     opacity: 1;
+    line-height: 1.7;
 `;

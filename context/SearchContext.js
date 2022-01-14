@@ -206,19 +206,27 @@ function SearchContext({ children }) {
 	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
 		setSearchInput(e.target.value);
+		console.log(showSuggestions)
 
 		if (e.target.value.length > 3) {
-			const res = await fetch('/api/autocomplete', {
-				body: JSON.stringify({
-				  input: e.target.value
-				}),
-				headers: {
-				  'Content-Type': 'application/json'
-				},
-				method: 'POST'
-			  })
-			const data = await res.json();
-			setSuggestions(data)
+			if (newTimeout) {
+				clearTimeout(newTimeout);
+			}
+
+			const newTimeout = setTimeout(() => {
+				fetch('/api/autocomplete', {
+					body: JSON.stringify({
+						input: e.target.value,
+					}),
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					method: 'POST',
+				})
+					.then((res) => res.json())
+					.then((data) => setSuggestions(data))
+					.catch((e) => console.log(e));
+			}, 300);
 		}
 	}
 
