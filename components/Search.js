@@ -82,6 +82,7 @@ function Search() {
 							type="search"
 							name="searchInput"
 							placeholder="Enter search location"
+							autoComplete="off"
 							value={searchInput}
 							onChange={(e) => handleInput(e)}
 							onFocus={() => {
