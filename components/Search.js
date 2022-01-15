@@ -5,7 +5,7 @@ import { SearchContext } from '../context/SearchContext';
 //Component imports
 import Checkbox from './Checkbox';
 import Loading from './Loading';
-import Suggestions from './Suggestions'
+import Suggestions from './Suggestions';
 //Styled Components
 import {
 	SearchContainer,
@@ -15,7 +15,7 @@ import {
 	Button,
 	SettingsPanel,
 	DenominationSettings,
-	Error
+	OtherSettings,
 } from './styled/Search.styled';
 //Icons
 import { SettingsIcon, SearchIcon, CloseIcon } from './icons';
@@ -46,7 +46,7 @@ function Search() {
 		activeSuggestion,
 	} = useContext(SearchContext);
 
-	const [inputFocus, setInputFocus] = useState(false)
+	const [inputFocus, setInputFocus] = useState(false);
 
 	//Refs
 	const inputRef = useRef(null);
@@ -56,24 +56,28 @@ function Search() {
 
 	//Initiate input focus on mount
 	useEffect(() => {
-		inputRef.current.focus()
-	}, [])
-	
+		inputRef.current.focus();
+	}, []);
+
 	//Always show suggestions when input focused
 	useEffect(() => {
-		if(inputRef.current === document.activeElement){
-			setShowSuggestions(true)
+		if (inputRef.current === document.activeElement) {
+			setShowSuggestions(true);
 		}
-	}, [inputRef.current])
+	}, [setShowSuggestions]);
 
 	return (
 		<SearchContainer>
 			<Form onSubmit={(e) => handleSubmit(e, null)}>
 				<SearchBar>
 					<InputWrapper>
-						<SearchIcon height="30" width="30" color={inputFocus ? "var(--blue)" : "#828282"} />
+						<SearchIcon
+							height="30"
+							width="30"
+							color={inputFocus ? 'var(--blue)' : '#828282'}
+						/>
 						<input
-							onKeyDown={e => handleKeyDown(e)}
+							onKeyDown={(e) => handleKeyDown(e)}
 							ref={inputRef}
 							type="search"
 							name="searchInput"
@@ -81,15 +85,15 @@ function Search() {
 							value={searchInput}
 							onChange={(e) => handleInput(e)}
 							onFocus={() => {
-								setShowSuggestions(true)
-								setInputFocus(!inputFocus)
+								setShowSuggestions(true);
+								setInputFocus(!inputFocus);
 							}}
 							onBlur={() => setInputFocus(!inputFocus)}
 						/>
 						<SettingsIcon
 							height="30"
 							width="30"
-							color={isSettingsOpen ? "var(--blue)" : "#828282"}
+							color={isSettingsOpen ? 'var(--blue)' : '#828282'}
 							className="settingsIcon"
 							onClick={() => setIsSettingsOpen(!isSettingsOpen)}
 						/>
@@ -100,7 +104,15 @@ function Search() {
 				{suggestions && showSuggestions && (
 					<Suggestions
 						role="tablist"
-						props={{ suggestions, handleSubmit, setSearchInput, setShowSuggestions, inputRef, setError, activeSuggestion }}
+						props={{
+							suggestions,
+							handleSubmit,
+							setSearchInput,
+							setShowSuggestions,
+							inputRef,
+							setError,
+							activeSuggestion,
+						}}
 					/>
 				)}
 				<SettingsPanel ref={settingsRef} open={isSettingsOpen}>
@@ -158,20 +170,33 @@ function Search() {
 						/>
 						<p onClick={() => setSelectNone(!selectNone)}>{selectText}</p>
 					</DenominationSettings>
-
-					<label htmlFor="dis" className="settingsTitle">
-						Search Radius <br />
-						<select
-							name="dis"
-							value={dis}
-							onChange={(e) => setDis(e.target.value)}>
-							<option value="10">10 miles</option>
-							<option value="25">25 miles</option>
-							<option value="50">50 miles</option>
-							<option value="75">75 miles</option>
-							<option value="100">100 miles</option>
-						</select>
-					</label>
+					<OtherSettings>
+						<label htmlFor="dis" className="settingsTitle">
+							Search Radius <br />
+							<select
+								name="dis"
+								value={dis}
+								onChange={(e) => setDis(e.target.value)}>
+								<option value="10">10 miles</option>
+								<option value="25">25 miles</option>
+								<option value="50">50 miles</option>
+								<option value="75">75 miles</option>
+								<option value="100">100 miles</option>
+							</select>
+						</label>
+						<Button
+							onClick={(e) => {
+								e.preventDefault()
+								if (suggestions) {
+									setIsSettingsOpen(!isSettingsOpen);
+									handleSubmit(e, activeSuggestion);
+								} else {
+									setIsSettingsOpen(!isSettingsOpen);
+								}
+							}}>
+							Save
+						</Button>
+					</OtherSettings>
 				</SettingsPanel>
 			</Form>
 			{loading && <Loading />}

@@ -21,16 +21,7 @@ export const Form = styled.form`
 export const SearchBar = styled.div`
 	position: relative;
 	display: flex;
-	gap: .5em;
-
-	.error {
-		position: absolute;
-		font-size: var(--fs-small);
-		font-weight: bold;
-		color: red;
-		text-align: center;
-		top: 4.5em;
-	 }
+	gap: 0.5em;
 `;
 
 export const InputWrapper = styled.div`
@@ -83,7 +74,6 @@ export const SettingsPanel = styled.aside`
 	padding: 2em;
 	display: ${({ open }) => (open ? 'flex' : 'none')};
 	justify-content: space-between;
-	flex-wrap: wrap;
 	gap: 0.5em;
 	border-radius: 8px;
 	box-shadow: var(--box-shadow);
@@ -93,6 +83,7 @@ export const SettingsPanel = styled.aside`
 		color: var(--blue);
 		font-weight: bold;
 		padding-bottom: 0.5em;
+		font-size: var(--fs-h5);
 	}
 
 	p {
@@ -116,6 +107,10 @@ export const SettingsPanel = styled.aside`
 		right: 10px;
 		cursor: pointer;
 	}
+
+	@media (max-width: 40em) {
+		top: -10em;
+	}
 `;
 
 export const DenominationSettings = styled.div`
@@ -124,3 +119,9 @@ export const DenominationSettings = styled.div`
 	align-items: flex-start;
 `;
 
+export const OtherSettings = styled.div`
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+`;

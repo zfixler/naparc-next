@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Head from 'next/head';
 //Styled Components
 import { Page } from '../components/styled/Pages.styled';
 import {
@@ -9,7 +10,8 @@ import {
 	Button,
 } from '../components/styled/Contact.styled';
 
-function contact() {
+function Contact() {
+	//contact form state
 	const [formState, setFormState] = useState({
 		name: '',
 		email: '',
@@ -17,6 +19,16 @@ function contact() {
 	});
 	const [successState, setSuccessState] = useState(false);
 
+	const disabled = formState.name === '' || formState.email === '' || formState.message === '' ? true : false;
+
+	const inputRef = useRef(null)
+
+	//useEffect for initial focus
+	useEffect(() => {
+		inputRef.current.focus()
+	}, [])
+
+	//handle input change
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setFormState((prevState) => {
@@ -26,7 +38,7 @@ function contact() {
 			};
 		});
 	}
-
+	//handle form submission
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -46,12 +58,18 @@ function contact() {
 
 	return (
 		<Page>
+			<Head>
+				<title>NAPARC Search | Contact</title>
+				<meta name="description" content="Contact page for NAPARC Search." />
+			</Head>
 			{!successState ? (
 				<>
 					<h1>Contact me!</h1>
 					<Form onSubmit={(e) => handleSubmit(e)}>
+						<p>Note:</p>
+						<p>If your congregation is listed with errors, please check your respective denomination directory before contacting me. My website reflects each denomination directory, which may be the source of the problem. Thank you!</p>
 						<Label htmlFor="name">Name</Label>
-						<Input type="text" name="name" onChange={(e) => handleChange(e)} />
+						<Input ref={inputRef} type="text" name="name" onChange={(e) => handleChange(e)} />
 						<Label htmlFor="email">Email</Label>
 						<Input
 							type="email"
@@ -60,7 +78,7 @@ function contact() {
 						/>
 						<Label htmlFor="message">Message</Label>
 						<Message name="message" onChange={(e) => handleChange(e)} />
-						<Button>Submit</Button>
+						<Button disabled={disabled}>Submit</Button>
 					</Form>
 				</>
 			) : (
@@ -73,4 +91,4 @@ function contact() {
 	);
 }
 
-export default contact;
+export default Contact;

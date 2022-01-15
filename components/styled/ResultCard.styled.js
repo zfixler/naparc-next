@@ -50,6 +50,11 @@ export const Card = styled.article`
 				color: var(--white);
 			}
 		}
+	p {
+		display: flex;
+		gap: .5em;
+		align-items: flex-start;
+	}
 
 	span {
 		font-weight: bold;

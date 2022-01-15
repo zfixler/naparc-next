@@ -70,6 +70,7 @@ const GlobalStyle = createGlobalStyle`
     .headline {
         margin-top: 1em;
         color: var(--blue);
+        position: relative;
     }
 
     .resultsWrapper {
@@ -79,6 +80,25 @@ const GlobalStyle = createGlobalStyle`
         justify-content: center;
         width: 100%;
     }
+
+    .bold {
+        font-weight: bold;
+        color: var(--blue);
+    }
+
+    .error {
+		position: absolute;
+		font-size: var(--fs-small);
+		font-weight: bold;
+		color: red;
+		text-align: center;
+		top: 4.5em;
+		z-index: 400;
+		padding: 1em;
+		border-radius: 8px;
+		background-color: var(--white);
+		box-shadow: var(--box-shadow);
+	}
 
 `;
 

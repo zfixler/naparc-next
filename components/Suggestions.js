@@ -25,7 +25,7 @@ function Suggestions({ props }) {
 				setShowSuggestions(false);
 			}
 		});
-	}, []);
+	});
 
 	return (
 		<SuggestionBox ref={ref}>

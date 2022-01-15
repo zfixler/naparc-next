@@ -1,4 +1,8 @@
+//Library imports
 import React from 'react';
+//Components
+import Tooltip from './Tooltip';
+//Styled Components
 import { Card, ButtonWrapper, InfoWrapper } from './styled/ResultCard.styled';
 
 function ResultCard({ result }) {
@@ -36,7 +40,7 @@ function ResultCard({ result }) {
 							)}
 						</>
 					)}
-					<p><span>Denomination:</span> {denom}</p>
+					<p><span>Denomination:</span> {denom} <Tooltip denom={denom}/> </p>
 					<p>
 						<span>{isPhone && 'Phone: '}</span>
 						{isPhone && phone}
@@ -49,7 +53,7 @@ function ResultCard({ result }) {
 				<footer>
 					<ButtonWrapper>
 						<a href={`mailto:${isEmail && email}`} className={isEmail === false ? 'disabled' : ''}>Email</a>
-						<a href={`${isWebsite && website}`} className={isWebsite === false ? 'disabled' : ''} target="_blank">Website</a>
+						<a href={`${isWebsite && website}`} className={isWebsite === false ? 'disabled' : ''} target="_blank" rel="noreferrer">Website</a>
 					</ButtonWrapper>
 					<p>Distance: {d} miles.</p>
 				</footer>

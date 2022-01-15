@@ -1,10 +1,20 @@
 import React from 'react';
+import Head from 'next/head';
+//Styled Components
 import { Page } from '../components/styled/Pages.styled';
+//Components
 import { Accordion } from '../components';
 
 function Faq() {
 	return (
 		<Page>
+			<Head>
+				<title>NAPARC Search | FAQ</title>
+				<meta
+					name="description"
+					content="Frequently asked questions about NAPARC Search."
+				/>
+			</Head>
 			<Accordion>
 				<h1>Frequently Asked Questions</h1>
 				<Accordion.Item id="faq-one">
@@ -13,7 +23,7 @@ function Faq() {
 						<p>
 							NAPARC stands for the North American Presbyterian and Reformed
 							Council. You may visit their official website{' '}
-							<a href="https://naparc.org" target="_blank" nonref="nonreferrer">
+							<a href="https://naparc.org" rel="noreferrer" target="_blank">
 								here.
 							</a>
 						</p>
@@ -28,15 +38,46 @@ function Faq() {
 							There are currently{' '}
 							<a
 								href="https://www.naparc.org/directories-2/"
-								target="_blank"
-								nonref="nonreferrer">
+								rel="noreferrer"
+								target="_blank">
 								13 denominations
 							</a>{' '}
 							within NAPARC, although all of them are not currently including in
-							this search. Check the denomination key to see the current
-							denominations, and check back with us soon. More will be included
-							shortly!
+							this search. More will be included shortly!
 						</p>
+						<p>The denominations currently included in this search are:</p>
+						<ul>
+							<li>
+								<span className="bold">HRC</span>: Heritage Reformed
+								Congregations
+							</li>
+							<li>
+								<span className="bold">OPC</span>: Orthodox Presbyterian Church
+							</li>
+							<li>
+								<span className="bold">PRC</span>: Presbyterian Reformed Church
+							</li>
+							<li>
+								<span className="bold">RPCNA</span>: Reformed Presbyterian
+								Church in North America
+							</li>
+							<li>
+								<span className="bold">ARP</span>: Associate Reformed
+								Presbyterian Church
+							</li>
+							<li>
+								<span className="bold">URCNA</span>: United Reformed Churches in
+								North America
+							</li>
+							<li>
+								<span className="bold">PCA</span>: Presbyterian Church in
+								America
+							</li>
+							<li>
+								<span className="bold">FRCNA</span>: Free Reformed Churches of
+								North America
+							</li>
+						</ul>
 					</Accordion.Body>
 				</Accordion.Item>
 				<Accordion.Item id="faq-three">
@@ -58,8 +99,9 @@ function Faq() {
 					<Accordion.Body>
 						<p>
 							The distance is calculated straight from longitude and latitude
-							points, or "as the crow flies". This will not necessarily be
-							accurate for travelling miles, unless of course you are a crow.
+							points, or &quote;as the crow flies&quote;. This will not
+							necessarily be accurate for travelling miles, unless of course you
+							are a crow.
 						</p>
 					</Accordion.Body>
 				</Accordion.Item>

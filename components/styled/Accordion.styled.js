@@ -27,6 +27,7 @@ export const Title = styled.button`
         font-weight: 400;
         text-align: left;
         margin-left: .5em;
+        padding-right: 1.5em;
     }
    
 
@@ -59,4 +60,15 @@ export const Body = styled.div`
     padding: .5em 1.5em;
     opacity: 1;
     line-height: 1.7;
+    
+    p {
+        margin: 1em 0;
+    }
+
+    ul {
+
+        li {
+            list-style-type: none;
+        }
+    }
 `;

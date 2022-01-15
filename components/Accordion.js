@@ -19,7 +19,7 @@ Accordion.Item = function AccordionItem({ id, children, ...restProps }) {
 		if (window.location.hash.replace(/#/, '') === id) {
 			setIsToggled(true);
 		}
-	}, []);
+	}, [id]);
 
 	return (
 		<Item {...restProps}>

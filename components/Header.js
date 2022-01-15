@@ -19,12 +19,17 @@ function Header() {
 					<NaparcLogo color="var(--blue)" height="60" width="180" />
 				</a>
 			</Link>
+			<Link href="/faq#faq-two">
+				<a className="beta">BETA</a>
+			</Link>
 			<nav>
 				<Link href="/faq">
-				<a className={router.asPath === '/faq' ? 'active' : ''}>FAQ</a>
+					<a className={router.asPath === '/faq' ? 'active' : ''}>FAQ</a>
 				</Link>
 				<Link href="/contact">
-					<a className={router.asPath === '/contact' ? 'active' : ''}>CONTACT</a>
+					<a className={router.asPath === '/contact' ? 'active' : ''}>
+						CONTACT
+					</a>
 				</Link>
 			</nav>
 		</HeaderContainer>

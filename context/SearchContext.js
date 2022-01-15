@@ -93,6 +93,15 @@ function SearchContext({ children }) {
 		}
 	}, [router.asPath]);
 
+	//useEffect for setting error message on no results
+	useEffect(() => {
+		if(results !== null){
+			if(results.results.length === 0){
+				setError("You're search did not yield any results. Please change your settings and try again.")
+			}
+		}
+	}, [results])
+
 	//Functions for handling search inputs and submission to server
 	//e comes from form submit via search button, query comes from suggestion selection
 	//TODO: Correct submission so that it does not mismatch depending on how it is submitted
@@ -206,7 +215,6 @@ function SearchContext({ children }) {
 	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
 		setSearchInput(e.target.value);
-		console.log(showSuggestions)
 
 		if (e.target.value.length > 3) {
 			if (newTimeout) {

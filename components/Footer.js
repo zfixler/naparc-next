@@ -10,7 +10,7 @@ function Footer() {
     return (
         <FooterContainer>
             <p>Disclaimer: This website has no official affiliation with NAPARC. All the data contained on this website is publically available online.</p>
-            <a href="https://zacharyfixler.com" target="_blank">Built by Zachary Fixler, &copy;{year}.</a>
+            <a href="https://zacharyfixler.com" target="_blank" rel="noreferrer">Built by Zachary Fixler, &copy;{year}.</a>
         </FooterContainer>
     )
 }

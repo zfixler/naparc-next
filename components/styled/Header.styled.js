@@ -6,6 +6,17 @@ export const HeaderContainer = styled.header`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+
+    .beta {
+        position: absolute;
+        left: 0;
+        top: 4em;
+        font-size: 1rem;
+        padding-left: .9em;
+        text-decoration: none;
+        color: red;
+    }
 
     nav {
         display: flex;
