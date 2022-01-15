@@ -68,7 +68,7 @@ function Search() {
 
 	return (
 		<SearchContainer>
-			<Form onSubmit={(e) => handleSubmit(e, null)}>
+			<Form onSubmit={(e) => handleSubmit(e, activeSuggestion)}>
 				<SearchBar>
 					<InputWrapper>
 						<SearchIcon
