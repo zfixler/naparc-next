@@ -65,6 +65,7 @@ export const Card = styled.article`
 		p {
 			margin-top: 0.75em;
 			text-align: center;
+			display: block;
 		}
 	}
 `;
@@ -77,6 +78,7 @@ export const InfoWrapper = styled.section`
 	align-self: flex-start;
 	margin-left: calc(10%);
 	margin-right: calc(10%);
+
 	p {
 		margin: 1em 0;
 	}
