@@ -12,7 +12,7 @@ export const HeaderContainer = styled.header`
         position: absolute;
         left: 0;
         top: 4em;
-        font-size: 1rem;
+        font-size: 16px;
         padding-left: .9em;
         text-decoration: none;
         color: red;
