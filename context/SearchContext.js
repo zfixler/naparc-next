@@ -129,7 +129,13 @@ function SearchContext({ children }) {
 		const regexUs = /\d{5}/;
 		const regexCa = /[A-Z]\d[A-Z]/;
 
-		if (i !== null) {
+		if (
+			(regexUs.test(searchInput) && searchInput.length === 5) ||
+			(regexCa.test(searchInput) && searchInput.length === 3)
+		) {
+			body.body.searchInput = searchInput;
+		}
+		else if (i !== null) {
 			//index taken from suggestion click
 			body.body.searchInput = {
 				long: suggestions.results[i].lon,
@@ -154,11 +160,6 @@ function SearchContext({ children }) {
 				lat: suggestions.results[0].lat,
 			};
 			setSearchInput(suggestions.results[0].formatted);
-		} else if (
-			(regexUs.test(searchInput) && searchInput.length === 5) ||
-			(regexCa.test(searchInput) && searchInput.length === 3)
-		) {
-			body.body.searchInput = searchInput;
 		} else {
 			setError(
 				'There was a problem with your search. Please try a different search.'
