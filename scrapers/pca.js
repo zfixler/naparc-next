@@ -206,7 +206,7 @@ async function fetchPage(url, data) {
 	return await page.data;
 }
 
-async function getPages() {
+export default async function getPages() {
 	const states = await getStateOptions().catch((error) => console.log(error));
 
 	for await (state of states) {
@@ -273,5 +273,3 @@ async function getPages() {
         process.stdout.write(`Total hits: ${count}.`);
     }
 }
-
-getPages().catch((error) => console.log(error));

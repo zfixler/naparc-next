@@ -122,7 +122,7 @@ async function scrapeCong(url) {
 	}
 
     id++;
-
+	console.log(congregation)
     if(dbRepo.dbRepo.getById(congregation.id)){
         dbRepo.dbRepo.update(congregation.id, congregation)
     } else {
@@ -130,13 +130,13 @@ async function scrapeCong(url) {
     };
 }
 
-async function scrapeRpcna() {
+export default async function scrapeRpcna() {
 	const response = await axios.get('https://rpcna.org/trunk/page/congregations');
 	const presbyteryUrlList = presbyteries(response.data);
-
+	
 	const allUrls = [];
 
-	for await (presb of presbyteryUrlList) {
+	for await (const presb of presbyteryUrlList) {
 		const response = await axios.get(presb);
 		const congUrls = congregations(response.data);
 		allUrls.push(congUrls);
@@ -144,11 +144,9 @@ async function scrapeRpcna() {
 
 	let count = 0;
 
-	for await (url of allUrls.flat()) {
+	for await (const url of allUrls.flat()) {
 		await scrapeCong(url).catch((error) => console.log(error));
 		console.log(`${count + 1} congregations scraped.`);
 		count++;
 	}
 }
-
-scrapeRpcna().catch((error) => console.log(error));

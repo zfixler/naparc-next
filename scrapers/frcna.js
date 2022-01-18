@@ -130,7 +130,7 @@ async function scrapeCong(html, url) {
 	}
 }
 
-async function scrapeFrcna() {
+export default async function scrapeFrcna() {
 	try {
 		const response = await axios.get(
 			'https://frcna.org/component/k2/itemlist/category/5'
@@ -157,5 +157,3 @@ async function scrapeFrcna() {
 		(error) => console.log(error);
 	}
 }
-
-scrapeFrcna();

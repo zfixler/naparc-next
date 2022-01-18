@@ -31,7 +31,7 @@ async function fetchArpData() {
 }
 
 
-async function createArpJson(){
+export default async function createArpJson(){
     const data = await fetchArpData().catch(error => console.log(error))
 
     data.forEach(obj => {
@@ -58,5 +58,3 @@ async function createArpJson(){
 
     })
 }
-
-createArpJson().catch(error => console.log(error))

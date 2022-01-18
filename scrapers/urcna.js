@@ -64,7 +64,7 @@ function scrapeCong(url) {
 }
 
 
-async function fetchUrl() {
+export default async function fetchUrl() {
 	try {
 		const page = await axios.get(
 			'https://www.urcna.org/sysfiles/member/family/urcna_report.cfm?memberid=1651&public=1'
@@ -88,6 +88,3 @@ async function fetchUrl() {
 		(error) => console.log(error);
 	}
 }
-
-
-fetchUrl().catch(error => console.log(error))

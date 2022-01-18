@@ -95,7 +95,7 @@ async function fetchData() {
 	return congArray
 }
 
-async function getLongLat(){
+export default async function getLongLat(){
 		const data = await fetchData().catch(error => console.log(error));
 
 		for await (let item of data){
@@ -146,6 +146,3 @@ async function getLongLat(){
 
 		} 
 }
-
-
-getLongLat().catch(error => console.log(error))

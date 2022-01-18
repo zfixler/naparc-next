@@ -127,7 +127,7 @@ async function scrapeCong(arr) {
 	}
 }
 
-async function getUrls() {
+export default async function getUrls() {
 	const page = await axios.get('https://presbyterianreformed.org/');
 	const html = await page.data;
 	const $ = cheerio.load(html);
@@ -143,5 +143,3 @@ async function getUrls() {
 
     await scrapeCong(urlArray);
 }
-
-getUrls().catch(error => console.log(error))

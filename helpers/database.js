@@ -46,7 +46,7 @@ function _delete(id) {
 // private helper functions
 
 function saveData() {
-    fs.writeFileSync(path.join(__dirname, '../', 'data/database.json'), JSON.stringify(db, null, 4));
+    fs.writeFileSync(path.join(process.cwd(), 'data/database.json'), JSON.stringify(db, null, 4));
 }
 
 exports.dbRepo = dbRepo;

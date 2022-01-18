@@ -151,7 +151,7 @@ async function getURL(res) {
 	}
 }
 
-async function scrapeOpc() {
+export default async function scrapeOpc() {
 	const urlList = [];
 	for (let i = 0; i < 550; i++) {
 		urlList.push(`https://www.opc.org/church.html?church_id=${i}`);
@@ -177,5 +177,3 @@ async function scrapeOpc() {
 		}
 	}
 }
-
-scrapeOpc().catch((error) => console.log(error));

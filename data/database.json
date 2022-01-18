@@ -11,7 +11,7 @@
         "lat": "33.3538",
         "long": "-86.8254",
         "dateCreated": "2021-12-24T19:43:53.289Z",
-        "dateUpdated": "2021-12-27T12:06:17.850Z"
+        "dateUpdated": "2022-01-18T23:14:27.563Z"
     },
     {
         "id": "rpcna-1",
@@ -25,7 +25,7 @@
         "lat": "40.7687",
         "long": "-80.3592",
         "dateCreated": "2021-12-24T19:43:54.334Z",
-        "dateUpdated": "2021-12-27T12:06:18.969Z"
+        "dateUpdated": "2022-01-18T23:14:29.143Z"
     },
     {
         "id": "rpcna-2",
@@ -39,7 +39,7 @@
         "lat": "40.4346",
         "long": "-79.8655",
         "dateCreated": "2021-12-24T19:43:55.320Z",
-        "dateUpdated": "2021-12-27T12:06:20.164Z"
+        "dateUpdated": "2022-01-18T23:14:30.476Z"
     },
     {
         "id": "rpcna-3",
@@ -53,7 +53,7 @@
         "lat": "41.3872",
         "long": "-81.3042",
         "dateCreated": "2021-12-24T19:43:56.330Z",
-        "dateUpdated": "2021-12-27T12:06:21.227Z"
+        "dateUpdated": "2022-01-18T23:14:31.756Z"
     },
     {
         "id": "rpcna-4",
@@ -67,7 +67,7 @@
         "lat": "41.6338",
         "long": "-80.1488",
         "dateCreated": "2021-12-24T19:43:57.333Z",
-        "dateUpdated": "2021-12-26T01:49:24.839Z"
+        "dateUpdated": "2022-01-18T23:14:33.139Z"
     },
     {
         "id": "rpcna-5",
@@ -81,21 +81,21 @@
         "lat": "40.7687",
         "long": "-80.3592",
         "dateCreated": "2021-12-24T19:43:58.447Z",
-        "dateUpdated": "2021-12-26T01:49:25.854Z"
+        "dateUpdated": "2022-01-18T23:14:34.570Z"
     },
     {
         "id": "rpcna-6",
         "name": "First RP Church of Beaver Falls",
         "denom": "RPCNA",
         "phone": "724-846-6877",
-        "email": "reformedmissions@gmail.com",
+        "email": "pastormatt@firstrpchurch.org",
         "website": "https://www.firstrpchurch.org",
         "pastor": "Tim McClain",
         "address": "209 Darlington Rd., Beaver Falls, PA 15010",
         "lat": "40.7687",
         "long": "-80.3592",
         "dateCreated": "2021-12-24T19:43:59.557Z",
-        "dateUpdated": "2021-12-26T01:49:26.901Z"
+        "dateUpdated": "2022-01-18T23:14:36.083Z"
     },
     {
         "id": "rpcna-7",
@@ -109,7 +109,7 @@
         "lat": "38.4489",
         "long": "-78.8714",
         "dateCreated": "2021-12-24T19:44:00.918Z",
-        "dateUpdated": "2021-12-26T01:49:27.994Z"
+        "dateUpdated": "2022-01-18T23:14:37.391Z"
     },
     {
         "id": "rpcna-8",
@@ -123,7 +123,7 @@
         "lat": "40.7925",
         "long": "-77.8523",
         "dateCreated": "2021-12-24T19:44:02.104Z",
-        "dateUpdated": "2021-12-26T01:49:29.094Z"
+        "dateUpdated": "2022-01-18T23:14:38.843Z"
     },
     {
         "id": "rpcna-9",
@@ -137,7 +137,7 @@
         "lat": "40.6252",
         "long": "-79.9443",
         "dateCreated": "2021-12-24T19:44:03.133Z",
-        "dateUpdated": "2021-12-26T01:49:30.136Z"
+        "dateUpdated": "2022-01-18T23:14:40.266Z"
     },
     {
         "id": "rpcna-10",
@@ -151,7 +151,7 @@
         "lat": "40.7687",
         "long": "-80.3592",
         "dateCreated": "2021-12-24T19:44:04.256Z",
-        "dateUpdated": "2021-12-26T01:49:31.159Z"
+        "dateUpdated": "2022-01-18T23:14:41.599Z"
     },
     {
         "id": "rpcna-11",
@@ -165,7 +165,7 @@
         "lat": "40.5616",
         "long": "-79.7129",
         "dateCreated": "2021-12-24T19:44:05.341Z",
-        "dateUpdated": "2021-12-26T01:49:32.215Z"
+        "dateUpdated": "2022-01-18T23:14:43.014Z"
     },
     {
         "id": "rpcna-12",
@@ -179,7 +179,7 @@
         "lat": "40.4001",
         "long": "-80.0161",
         "dateCreated": "2021-12-24T19:44:11.297Z",
-        "dateUpdated": "2021-12-26T01:49:33.345Z"
+        "dateUpdated": "2022-01-18T23:14:44.460Z"
     },
     {
         "id": "rpcna-13",
@@ -193,21 +193,21 @@
         "lat": "41.0411",
         "long": "-79.5017",
         "dateCreated": "2021-12-24T19:44:12.378Z",
-        "dateUpdated": "2021-12-26T01:49:34.418Z"
+        "dateUpdated": "2022-01-18T23:14:45.940Z"
     },
     {
         "id": "rpcna-14",
         "name": "Rose Point RP Church",
         "denom": "RPCNA",
         "phone": "724-924-9519",
-        "email": "cabrown@ymail.com",
+        "email": "pastor@rosepointrpc.org",
         "website": "https://rosepointrpc.org",
         "pastor": "Charles Brown",
         "address": "1166 Church Alle., New Castle, PA 16101",
         "lat": "40.9922",
         "long": "-80.3284",
         "dateCreated": "2021-12-24T19:44:13.395Z",
-        "dateUpdated": "2021-12-26T01:49:35.545Z"
+        "dateUpdated": "2022-01-18T23:14:47.347Z"
     },
     {
         "id": "rpcna-15",
@@ -221,7 +221,7 @@
         "lat": "40.5488",
         "long": "-80.0474",
         "dateCreated": "2021-12-24T19:44:14.439Z",
-        "dateUpdated": "2021-12-26T01:49:36.635Z"
+        "dateUpdated": "2022-01-18T23:14:48.859Z"
     },
     {
         "id": "rpcna-16",
