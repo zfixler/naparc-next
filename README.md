@@ -10,7 +10,7 @@ The goal of this project is to make each denomination within NAPARC searchable i
 ## The Scrapers
 I wrote 8 (the rest are coming soon!) web scrapers with Cheerio.js to grab the congregations from each denominations directory. These are in the scrapers directory, and they each feed their results into a master JSON document located in the data directory.
 
-TODO: Before my recent move to Next.js for this project, these scrapers were running via node-chron on a Linode server. Now that the project is in Next.js, I plan to trigger the scrapers via Github Actions and the Next.js API endpoints. The whole project will be happily deployed via continuous deployment from this repo. Nice!
+Before my recent move to Next.js for this project, these scrapers were running via node-chron on a Linode server. Now that the project is in Next.js, the scrapers are triggered via [Github Actions and the Next.js API endpoints](https://github.com/paulphys/nextjs-cron). The whole project will be happily deployed via continuous deployment from this repo. Nice!
 
 ## The Front End
 The main feature on the front end of this project is the search bar itself. When the user enters a search location, I am using the GeoApify Autocomplete API in order to populate suggested location results. The longitude and latitude of the search query is sent back to the server, matched against the locations in the database, and the results are sent back to the client to populate the results. 
