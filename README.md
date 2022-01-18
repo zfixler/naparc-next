@@ -1,4 +1,6 @@
 # NAPARC Search
+Visit the live site at: https://naparcsearch.com.
+
 ## The Problem
 NAPARC stands for the North American Presbyterian and Reformed Council, and it consists of 13 different Protestant denominations. Each of these denominations has their own online church directory, but they are not able to be searched in any one location. This makes it pretty tedious checking each individual website for a congregation in any given area.
 
