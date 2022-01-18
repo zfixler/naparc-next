@@ -1,4 +1,4 @@
-name: Hourly cron job
+name: Cron Scrape
 on:
   schedule:
     - cron: '0 21 * * 2'
