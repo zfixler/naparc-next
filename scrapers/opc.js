@@ -161,7 +161,7 @@ export default async function scrapeOpc() {
 		rejectUnauthorized: false,
 	});
 
-	for await (url of urlList) {
+	for await (const url of urlList) {
 		const page = await axios.get(url, {
 			method: 'GET',
 			redirect: 'manual',

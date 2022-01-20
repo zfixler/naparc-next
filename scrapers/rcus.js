@@ -17,7 +17,7 @@ async function scrapeCongs() {
     })
 
 
-    // for await (congregation of rcus) {
+    // for await (const congregation of rcus) {
     //     if (
     //         congregation.address.match(/\d{5}/g) &&
     //         !congregation.address.match(/[A-Z]\d[A-Z]/g)

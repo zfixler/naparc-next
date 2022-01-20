@@ -138,7 +138,7 @@ export default async function scrapeFrcna() {
 		const html = await response.data;
 		const urlList = await getUrlList(html);
 
-		for await (url of urlList) {
+		for await (const url of urlList) {
 			const response = await axios
 				.get(`http://www.frcna.org${url}`)
 				.catch((error) => console.log(error));

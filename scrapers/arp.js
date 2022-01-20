@@ -20,7 +20,7 @@ async function fetchArpData() {
         { lat: 57.352124, long: -119.535280}
 	];
 
-	for await (coordinate of coordinates) {
+	for await (const coordinate of coordinates) {
 		const url = `http://arpchurch.org/wp-admin/admin-ajax.php?action=store_search&lat=${coordinate.lat}&lng=${coordinate.long}&max_results=100&search_radius=500`;
 		const res = await axios.get(url);
         const data = await res.data;

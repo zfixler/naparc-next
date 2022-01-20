@@ -122,7 +122,7 @@ async function scrapeCong(url) {
 	}
 
     id++;
-	console.log(congregation)
+	
     if(dbRepo.dbRepo.getById(congregation.id)){
         dbRepo.dbRepo.update(congregation.id, congregation)
     } else {

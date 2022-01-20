@@ -9,7 +9,7 @@ import createArpJson from '../../scrapers/arp';
 
 export default async function handler(req, res) {
 	const { APP_KEY } = process.env;
-  	const { ACTION_KEY } = req.headers.authorization.split(" ")[1];
+  	const ACTION_KEY  = req.headers.authorization.split(" ")[1];
 	
 	try {
 		if(ACTION_KEY === APP_KEY){
@@ -21,11 +21,11 @@ export default async function handler(req, res) {
 			const hrc = await getLongLat().catch((e) => console.log(e));
 			const frcna = await scrapeFrcna().catch((e) => console.log(e));
 			const arp = await createArpJson().catch((e) => console.log(e));
-			res.status(200).json({ message: 'Scrape Complete' });
+			res.status(200).json({ message: 'Scrape Complete' }).end();
 		} else {
-			res.status(401)
+			res.status(401).end()
 		}
 	} catch(err){
-		res.status(500)
+		res.status(500).end()
 	}
 }

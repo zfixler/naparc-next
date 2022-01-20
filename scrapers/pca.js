@@ -209,7 +209,7 @@ async function fetchPage(url, data) {
 export default async function getPages() {
 	const states = await getStateOptions().catch((error) => console.log(error));
 
-	for await (state of states) {
+	for await (const state of states) {
 		if (state !== 'Select State' && state !== '-') {
 			const data = `State=${state}&orderby=1`;
 			const url = 'https://stat.pcanet.org/ac/directory/directory.cfm';
@@ -228,7 +228,7 @@ export default async function getPages() {
 		}
 	}
 
-	for await (cong of pca){
+	for await (const cong of pca){
         if (usa.includes(cong.state.toUpperCase())) {
             const locArr = await getUsLongLat(cong.city, cong.state).catch((error) => {
                 if (error.code === 'ECONNRESET') {
