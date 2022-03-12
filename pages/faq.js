@@ -55,9 +55,6 @@ function Faq() {
 								<span className="bold">OPC</span>: Orthodox Presbyterian Church
 							</li>
 							<li>
-								<span className="bold">PRC</span>: Presbyterian Reformed Church
-							</li>
-							<li>
 								<span className="bold">RPCNA</span>: Reformed Presbyterian
 								Church in North America
 							</li>

@@ -16,7 +16,6 @@ function SearchContext({ children }) {
 		arp: true,
 		urcna: true,
 		hrc: true,
-		prc: true,
 		rpcna: true,
 		frcna: true,
 	});
@@ -41,7 +40,6 @@ function SearchContext({ children }) {
 				arp: false,
 				urcna: false,
 				hrc: false,
-				prc: false,
 				rpcna: false,
 				frcna: false,
 			});
@@ -52,7 +50,6 @@ function SearchContext({ children }) {
 				arp: true,
 				urcna: true,
 				hrc: true,
-				prc: true,
 				rpcna: true,
 				frcna: true,
 			});
@@ -95,12 +92,14 @@ function SearchContext({ children }) {
 
 	//useEffect for setting error message on no results
 	useEffect(() => {
-		if(results !== null){
-			if(results.results.length === 0){
-				setError("You're search did not yield any results. Please change your settings and try again.")
+		if (results !== null) {
+			if (results.results.length === 0) {
+				setError(
+					"You're search did not yield any results. Please change your settings and try again."
+				);
 			}
 		}
-	}, [results])
+	}, [results]);
 
 	//Functions for handling search inputs and submission to server
 	//e comes from form submit via search button, query comes from suggestion selection
@@ -118,7 +117,6 @@ function SearchContext({ children }) {
 				opc: denominations.opc,
 				rpcna: denominations.rpcna,
 				urcna: denominations.urcna,
-				prc: denominations.prc,
 				hrc: denominations.hrc,
 				frcna: denominations.frcna,
 				arp: denominations.arp,
@@ -134,8 +132,7 @@ function SearchContext({ children }) {
 			(regexCa.test(searchInput) && searchInput.length === 3)
 		) {
 			body.body.searchInput = searchInput;
-		}
-		else if (i !== null) {
+		} else if (i !== null) {
 			//index taken from suggestion click
 			body.body.searchInput = {
 				long: suggestions.results[i].lon,

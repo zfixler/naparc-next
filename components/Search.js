@@ -164,11 +164,6 @@ function Search() {
 							select={selectChange}
 							denominations={denominations}
 						/>
-						<Checkbox
-							name={'prc'}
-							select={selectChange}
-							denominations={denominations}
-						/>
 						<p onClick={() => setSelectNone(!selectNone)}>{selectText}</p>
 					</DenominationSettings>
 					<OtherSettings>
