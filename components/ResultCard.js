@@ -1,5 +1,7 @@
 //Library imports
 import React from 'react';
+//Utilities
+import { getMiles } from '../helpers/utils';
 //Components
 import Tooltip from './Tooltip';
 //Styled Components
@@ -55,7 +57,7 @@ function ResultCard({ result }) {
 						<a href={`mailto:${isEmail && email}`} className={isEmail === false ? 'disabled' : ''}>Email</a>
 						<a href={`${isWebsite && website}`} className={isWebsite === false ? 'disabled' : ''} target="_blank" rel="noreferrer">Website</a>
 					</ButtonWrapper>
-					<p>Distance: {d} miles.</p>
+					<p>Distance: {getMiles(d)} miles.</p>
 				</footer>
 			</Card>
 	);
