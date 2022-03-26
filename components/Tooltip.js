@@ -25,6 +25,8 @@ function Tooltip({ denom }) {
 				return 'Presbyterian Church in America';
 			case 'FRCNA':
 				return 'Free Reformed Churches of North America';
+			case 'RCUS':
+				return 'The Reformed Church in the United States';
 			default:
 				break;
 		}

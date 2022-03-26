@@ -7,7 +7,7 @@ export const SuggestionBox = styled.ul`
 	border-radius: 8px;
 	top: 3.5em;
 	width: 100%;
-	z-index: 100;
+	z-index: 1500;
 
 	li {
 		list-style-type: none;

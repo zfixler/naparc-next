@@ -74,6 +74,10 @@ function Faq() {
 								<span className="bold">FRCNA</span>: Free Reformed Churches of
 								North America
 							</li>
+							<li>
+								<span className="bold">RCUS</span>: The Reformed Church in the
+								United States
+							</li>
 						</ul>
 					</Accordion.Body>
 				</Accordion.Item>

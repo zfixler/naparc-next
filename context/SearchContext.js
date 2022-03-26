@@ -18,6 +18,7 @@ function SearchContext({ children }) {
 		hrc: true,
 		rpcna: true,
 		frcna: true,
+		rcus: true
 	});
 	const [selectNone, setSelectNone] = useState(false);
 	const [dis, setDis] = useState(25);
@@ -42,6 +43,7 @@ function SearchContext({ children }) {
 				hrc: false,
 				rpcna: false,
 				frcna: false,
+				rcus: false
 			});
 		} else {
 			setDenominations({
@@ -52,6 +54,7 @@ function SearchContext({ children }) {
 				hrc: true,
 				rpcna: true,
 				frcna: true,
+				rcus: true
 			});
 		}
 	}, [selectNone]);
@@ -120,6 +123,7 @@ function SearchContext({ children }) {
 				hrc: denominations.hrc,
 				frcna: denominations.frcna,
 				arp: denominations.arp,
+				rcus: denominations.rcus,
 				dis: dis,
 			},
 		});
