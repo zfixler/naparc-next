@@ -18,7 +18,7 @@ function SearchContext({ children }) {
 		hrc: true,
 		rpcna: true,
 		frcna: true,
-		rcus: true
+		rcus: true,
 	});
 	const [selectNone, setSelectNone] = useState(false);
 	const [dis, setDis] = useState(25);
@@ -43,7 +43,7 @@ function SearchContext({ children }) {
 				hrc: false,
 				rpcna: false,
 				frcna: false,
-				rcus: false
+				rcus: false,
 			});
 		} else {
 			setDenominations({
@@ -54,7 +54,7 @@ function SearchContext({ children }) {
 				hrc: true,
 				rpcna: true,
 				frcna: true,
-				rcus: true
+				rcus: true,
 			});
 		}
 	}, [selectNone]);
@@ -218,12 +218,32 @@ function SearchContext({ children }) {
 	async function handleInput(e) {
 		setSearchInput(e.target.value);
 
-		if (e.target.value.length > 3) {
-			if (newTimeout) {
-				clearTimeout(newTimeout);
-			}
+		let currentTimeout;
+		let currentPromiseReject;
+		const value = e.target.value;
+		const minInput = 3;
+		const debounceDelay = 300;
 
-			const newTimeout = setTimeout(() => {
+		if (currentTimeout) {
+			clearTimeout(currentTimeout);
+		}
+
+		if (currentPromiseReject) {
+			currentPromiseReject({
+				canceled: true,
+			});
+		}
+
+		if (!value || value.length < minInput) {
+			return false;
+		}
+
+		currentTimeout = setTimeout(() => {
+			currentTimeout = null;
+
+			const promise = new Promise((resolve, reject) => {
+				currentPromiseReject = reject;
+
 				fetch('/api/autocomplete', {
 					body: JSON.stringify({
 						input: e.target.value,
@@ -232,17 +252,31 @@ function SearchContext({ children }) {
 						'Content-Type': 'application/json',
 					},
 					method: 'POST',
-				})
-					.then((res) => res.json())
-					.then((data) => setSuggestions(data))
-					.catch((e) => console.log(e));
-			}, 300);
-		}
+				}).then(response => {
+					if (response.ok) {
+						response.json().then(data => resolve(data));
+					  } else {
+						response.json().then(data => reject(data));
+					  }
+				});
+			});
+
+			promise.then(
+				(data) => {
+					setSuggestions(data);
+				},
+				(error) => {
+					if (!error.canceled) {
+						console.log(error);
+					}
+				}
+			);
+		}, debounceDelay);
 	}
 
 	//function for handling keyboard events
 	function handleKeyDown(e) {
-		if (suggestions !== null) {
+		if (results && suggestions) {
 			switch (e.key) {
 				case 'Down':
 					if (activeSuggestion < suggestions.results.length - 1) {

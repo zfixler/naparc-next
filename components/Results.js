@@ -26,7 +26,7 @@ function Results() {
 					<AnimatePresence>
 				{results.results.length > 0
 					? results.results[currentPage].map((r) => (
-							<motion.div key={r.id} variants={item}>
+							<motion.div key={r._id} variants={item}>
 								<ResultCard result={r} />
 							</motion.div>
 					  ))

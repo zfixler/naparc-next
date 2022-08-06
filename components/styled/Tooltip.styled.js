@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 
-export const TooltipContainer = styled.div`
+export const TooltipContainer = styled.span`
 	height: fit-content;
 	display: flex;
 	align-self: center;
 	position: relative;
 `;
 
-export const Message = styled.p`
+export const Message = styled.span`
 	position: absolute;
 	background-color: var(--gray);
-	color: var(--white);
+	color: var(--white) !important;
 	top: 1em;
 	width: 12em;
 	left: calc(-6em);
