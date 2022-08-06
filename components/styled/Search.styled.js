@@ -39,6 +39,11 @@ export const InputWrapper = styled.div`
 		background-color: var(--white);
 		font-size: 1.1rem;
 		max-width: 47vw;
+		-webkit-appearance: textfield;
+
+		&::-webkit-search-decoration {
+			-webkit-appearance: none;
+		}
 	}
 
 	input:focus {
