@@ -68,7 +68,7 @@ function Search() {
 	}, [setShowSuggestions]);
 
 	// Debounces handleInput
-	const debouncedInput = useMemo(() => debounce(handleInput, 500));
+	const debouncedInput = useMemo(() => debounce(handleInput, 500), [searchInput]);
 
 	function handleInputChange(e) {
 		setSearchInput(e.target.value);
