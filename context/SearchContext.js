@@ -216,7 +216,6 @@ function SearchContext({ children }) {
 	}
 	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
-		setSearchInput(e.target.value);
 
 		let currentTimeout;
 		let currentPromiseReject;
