@@ -216,62 +216,23 @@ function SearchContext({ children }) {
 	}
 	//function for handling input box change and hitting autocomplete api
 	async function handleInput(e) {
-		setSearchInput(e.target.value);
-
-		let currentTimeout;
-		let currentPromiseReject;
 		const value = e.target.value;
-		const minInput = 3;
-		const debounceDelay = 300;
-
-		if (currentTimeout) {
-			clearTimeout(currentTimeout);
-		}
-
-		if (currentPromiseReject) {
-			currentPromiseReject({
-				canceled: true,
-			});
-		}
-
-		if (!value || value.length < minInput) {
-			return false;
-		}
-
-		currentTimeout = setTimeout(() => {
-			currentTimeout = null;
-
-			const promise = new Promise((resolve, reject) => {
-				currentPromiseReject = reject;
-
-				fetch('/api/autocomplete', {
-					body: JSON.stringify({
-						input: e.target.value,
-					}),
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					method: 'POST',
-				}).then(response => {
-					if (response.ok) {
-						response.json().then(data => resolve(data));
-					  } else {
-						response.json().then(data => reject(data));
-					  }
-				});
-			});
-
-			promise.then(
-				(data) => {
-					setSuggestions(data);
+		if (!value || value.length < 3) return;
+		try {
+			const response = await fetch('/api/autocomplete', {
+				body: JSON.stringify({
+					input: e.target.value,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
 				},
-				(error) => {
-					if (!error.canceled) {
-						console.log(error);
-					}
-				}
-			);
-		}, debounceDelay);
+				method: 'POST',
+			});
+			const data = await response.json();
+			setSuggestions(data)
+		} catch(error) {
+			console.log(error);
+		}
 	}
 
 	//function for handling keyboard events
