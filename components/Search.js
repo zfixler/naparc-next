@@ -1,6 +1,5 @@
 //Library imports
-import { useRef, useContext, useState, useEffect, useMemo } from 'react';
-import { debounce } from 'lodash';
+import { useRef, useContext, useState, useEffect } from 'react';
 //Context import
 import { SearchContext } from '../context/SearchContext';
 //Component imports
@@ -66,14 +65,6 @@ function Search() {
 			setShowSuggestions(true);
 		}
 	}, [setShowSuggestions]);
-
-	// Debounces handleInput
-	const debouncedInput = useMemo(() => debounce(handleInput, 500), [searchInput]);
-
-	function handleInputChange(e) {
-		setSearchInput(e.target.value);
-		debouncedInput(e);
-	}
 	
 	return (
 		<SearchContainer>
@@ -93,7 +84,7 @@ function Search() {
 							placeholder="Enter search location"
 							autoComplete="off"
 							value={searchInput}
-							onChange={handleInputChange}
+							onChange={(e) => setSearchInput(e.target.value)}
 							onFocus={() => {
 								setShowSuggestions(true);
 								setInputFocus(!inputFocus);

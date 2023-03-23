@@ -215,13 +215,12 @@ function SearchContext({ children }) {
 		});
 	}
 	//function for handling input box change and hitting autocomplete api
-	async function handleInput(e) {
-		const value = e.target.value;
+	async function handleInput(value) {
 		if (!value || value.length < 3) return;
 		try {
 			const response = await fetch('/api/autocomplete', {
 				body: JSON.stringify({
-					input: e.target.value,
+					input: value,
 				}),
 				headers: {
 					'Content-Type': 'application/json',
@@ -229,11 +228,18 @@ function SearchContext({ children }) {
 				method: 'POST',
 			});
 			const data = await response.json();
-			setSuggestions(data)
-		} catch(error) {
+			setSuggestions(data);
+		} catch (error) {
 			console.log(error);
 		}
 	}
+
+	useEffect(() => {
+		const getLocation = setTimeout(() => handleInput(searchInput), 500);
+		return () => {
+			clearTimeout(getLocation);
+		};
+	}, [searchInput]);
 
 	//function for handling keyboard events
 	function handleKeyDown(e) {
